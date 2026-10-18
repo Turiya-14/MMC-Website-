@@ -15,7 +15,7 @@ privacy-policy.html   Privacy Policy (IT Act 2000 / DPDP Act 2023)
 terms.html            Terms & Conditions
 css/style.css          design tokens, layout, all styling
 css/fonts/              self-hosted font files
-js/main.js              preloader, Lenis + ScrollTrigger, cursor, menu, filmstrip, lightbox, contact modal
+js/main.js              preloader, Lenis + ScrollTrigger, cursor, filmstrip, video scroll-zoom, lightbox, contact modal
 vendor/                 local copies of gsap.min.js / ScrollTrigger.min.js / lenis.min.js
 assets/                 real MMC photos/creatives (sourced from Instagram)
 assets/logo/            real MMC logo — transparent-bg crops (mark + full lockup) at a few sizes
@@ -24,10 +24,10 @@ test/check.js           Playwright smoke test (screenshots + console-error check
 ```
 
 ## Brand
-- **Logo** — the real MMC logo now lives on the site: header nav, hero watermark, and both legal pages. Palette pulled directly from it: signal blue (`#2E6CB0`) + acid orange (`#E2762F`) on a near-black ink background and warm paper cream.
+- **Logo** — the real MMC logo now lives on the site: hero watermark, both legal pages, and the favicon (`favicon.ico` + `assets/favicon/`, generated from `assets/logo/mark-1000.png`). Palette pulled directly from it: signal blue (`#2E6CB0`) + acid orange (`#E2762F`) on a near-black ink background and warm paper cream.
 - **Type** — Poppins (display headlines + tracked uppercase UI labels) + Inter (body copy).
-- **Contact** — real details are live throughout the site (header, mobile menu, footer):
-  - Phone: `+91 88885 33422` (`tel:` link)
+- **Contact** — real details are live in the footer on every page (there is no top header — the footer link row is the site nav):
+  - Phone: `+91 88885 33422` and `+91 70202 62435` (`tel:` links)
   - Email: `business@makemycampaign.co.in` (`mailto:` link)
   - Instagram: [instagram.com/makemycampaignn](https://www.instagram.com/makemycampaignn)
   - HQ: Priyadarshan Baglow, Manik Nagar, Nashik, Maharashtra 422005 — with branches in **Thane** and **Goa**. The whole site is written to reflect all three locations, not Nashik alone.

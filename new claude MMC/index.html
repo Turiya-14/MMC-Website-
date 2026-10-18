@@ -11,7 +11,9 @@
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"Organization","name":"MakeMyCampaign","url":"https://makemycampaign.co.in","address":{"@type":"PostalAddress","streetAddress":"Priyadarshan Baglow, Manik Nagar","addressLocality":"Nashik","addressRegion":"Maharashtra","postalCode":"422005","addressCountry":"IN"},"areaServed":"IN","telephone":"+91-88885-33422","sameAs":["https://www.instagram.com/makemycampaignn"]}
 </script>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='18' fill='%230A1017'/%3E%3Ctext x='50' y='63' font-family='Arial,Helvetica,sans-serif' font-weight='900' font-size='38' fill='%23E2762F' text-anchor='middle'%3EMMC%3C/text%3E%3C/svg%3E">
+<link rel="icon" href="favicon.ico" sizes="16x16 32x32 48x48">
+<link rel="icon" type="image/png" href="assets/favicon/favicon-192.png" sizes="192x192">
+<link rel="apple-touch-icon" href="assets/favicon/apple-touch-icon.png">
 <link rel="canonical" href="https://makemycampaign.co.in/">
 
 <link rel="stylesheet" href="css/style.css">
@@ -43,28 +45,23 @@
 <div class="scroll-rail scroll-rail--top" id="railTop"></div>
 <div class="scroll-rail scroll-rail--bottom" id="railBottom"></div>
 
-<!-- ============ HEADER ============ -->
-<header class="site-header" id="siteHeader">
-  <a href="#top" class="logo" aria-label="MakeMyCampaign home">
-    <img class="logo-mark" src="assets/logo/mark-320.png" alt="MakeMyCampaign">
-  </a>
-
-  <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="navPanel">
-    <span class="nav-toggle-icon" aria-hidden="true"></span>
+<!-- ============ QUICK NAV (full-screen overlay menu) ============ -->
+<div class="quick-nav" id="quickNav">
+  <button type="button" class="quick-nav-toggle" id="quickNavToggle" aria-label="Open menu" aria-expanded="false" aria-controls="quickNavOverlay">
+    <span class="quick-nav-icon" aria-hidden="true"></span>
   </button>
-</header>
-
-<!-- ============ NAV PANEL (plus-icon opens this — Home / Services / Work / Contact) ============ -->
-<div class="nav-panel" id="navPanel" aria-hidden="true">
-  <nav aria-label="Primary">
-    <a href="#top" data-nav-link><span class="nav-panel-num">01</span><span class="nav-panel-label">Home</span></a>
-    <a href="#services" data-nav-link><span class="nav-panel-num">02</span><span class="nav-panel-label">Services</span></a>
-    <a href="work.html" data-nav-link><span class="nav-panel-num">03</span><span class="nav-panel-label">Work</span></a>
-    <a href="#contact" data-nav-link><span class="nav-panel-num">04</span><span class="nav-panel-label">Contact</span></a>
+</div>
+<div class="nav-overlay" id="quickNavOverlay" aria-hidden="true">
+  <p class="nav-overlay-eyebrow">Menu</p>
+  <nav class="nav-overlay-menu" aria-label="Main navigation">
+    <a href="#top" class="nav-overlay-link"><span class="nav-overlay-num">01</span>Home</a>
+    <a href="#services" class="nav-overlay-link"><span class="nav-overlay-num">02</span>Services</a>
+    <a href="work.html" class="nav-overlay-link"><span class="nav-overlay-num">03</span>Work</a>
+    <a href="#contact" class="nav-overlay-link"><span class="nav-overlay-num">04</span>Contact</a>
   </nav>
-  <div class="nav-panel-footer">
-    <a href="tel:+918888533422">+91 88885 33422</a>
-    <a href="mailto:business@makemycampaign.co.in">business@makemycampaign.co.in</a>
+  <div class="nav-overlay-foot">
+    <a href="tel:+917020262435">+91 70202 62435</a>
+    <span>Nashik, Thane &amp; Goa</span>
   </div>
 </div>
 
@@ -72,9 +69,7 @@
 
   <!-- ============ HERO ============ -->
   <section class="hero" id="hero">
-    <div class="hero-monogram" aria-hidden="true" tabindex="-1">
-      <div class="hero-monogram-spin"><img src="assets/logo/mark-1000.png" alt="" loading="eager"></div>
-    </div>
+
     <div class="hero-inner">
       <p class="eyebrow"><span class="eyebrow-dot"></span> Headquartered in Nashik — working across India</p>
       <h1 class="hero-headline" id="heroHeadline">
@@ -386,7 +381,7 @@
   <section class="latest">
     <div class="section-head section-head--row">
       <h2>What's going on</h2>
-      <a href="#contact" class="btn btn--text magnetic">View more <span>→</span></a>
+      <a href="work.html" class="btn btn--text magnetic">View more <span>→</span></a>
     </div>
     <div class="latest-grid">
       <div class="latest-tile latest-tile--side has-image"><img src="assets/whatsapp.jpg" alt="MMC WhatsApp CPaaS campaign creative" loading="lazy"></div>
@@ -395,11 +390,20 @@
       <div class="latest-tile latest-tile--side placeholder-box"><span class="placeholder-label">Creative placeholder</span></div>
       <div class="latest-tile has-video" id="latestVideoTile">
         <video class="video-backdrop" src="assets/MMC_ADD.mp4" muted loop autoplay playsinline aria-hidden="true"></video>
-        <video class="video-fg" src="assets/MMC_ADD.mp4" muted loop autoplay playsinline aria-label="MMC brand video"></video>
-        <button class="sound-toggle" type="button" aria-label="Unmute video" aria-pressed="false">
-          <svg class="icon-muted" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3z"/><path d="M16.5 8.5l5 7M21.5 8.5l-5 7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
-          <svg class="icon-unmuted" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3z"/><path d="M15.5 9a4 4 0 0 1 0 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/><path d="M18 6.5a8 8 0 0 1 0 11" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
-        </button>
+        <!-- Media slot: a fixed-aspect box (--media-ratio = the clip's shape)
+             that the scroll-zoom measures and scales. To switch to YouTube,
+             replace the .video-fg <video> below with
+               <iframe src="https://www.youtube-nocookie.com/embed/VIDEO_ID?autoplay=1&mute=1&loop=1&playlist=VIDEO_ID&playsinline=1"
+                       title="MMC brand video" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>
+             delete the .video-backdrop above and the .sound-toggle below,
+             and set --media-ratio to 16/9 for a landscape upload. No JS changes. -->
+        <div class="latest-media" style="--media-ratio:9/16;">
+          <video class="video-fg" src="assets/MMC_ADD.mp4" muted loop autoplay playsinline aria-label="MMC brand video"></video>
+          <button class="sound-toggle" type="button" aria-label="Unmute video" aria-pressed="false">
+            <svg class="icon-muted" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3z"/><path d="M16.5 8.5l5 7M21.5 8.5l-5 7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+            <svg class="icon-unmuted" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3z"/><path d="M15.5 9a4 4 0 0 1 0 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/><path d="M18 6.5a8 8 0 0 1 0 11" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+          </button>
+        </div>
       </div>
       <div class="latest-tile latest-tile--side placeholder-box"><span class="placeholder-label">Creative placeholder</span></div>
       <div class="latest-tile latest-tile--side placeholder-box"><span class="placeholder-label">Creative placeholder</span></div>
@@ -416,13 +420,11 @@
 
       <div class="contact-row">
         <div>
-          <a href="tel:+918888533422" class="contact-phone">+91 88885 33422</a>
-          <div class="contact-branches">
-            <span>HQ</span>Priyadarshan Baglow, Manik Nagar, Nashik, Maharashtra 422005
+          <div class="contact-phones">
+            <a href="tel:+918888533422" class="contact-phone">+91 88885 33422</a>
+            <a href="tel:+917020262435" class="contact-phone">+91 70202 62435</a>
           </div>
-          <div class="contact-branches">
-            <span>Coverage</span>Pan-India
-          </div>
+          <div class="contact-branches">Nashik, Thane &amp; Goa</div>
         </div>
         <div class="contact-cta-row">
           <button type="button" class="btn btn--solid magnetic js-open-contact"><span>Start Your Campaign</span></button>

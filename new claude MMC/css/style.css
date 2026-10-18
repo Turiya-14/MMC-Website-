@@ -73,7 +73,7 @@
 
 /* UI labels that used to be set in a monospace face now use tracked,
    semi-bold Poppins instead — one rule covers every such element. */
-.cursor-label,.preloader-count,.nav-panel-footer,
+.cursor-label,.preloader-count,
 .btn,.btn--text,.eyebrow,.scroll-cue,.tag,.service-num,
 .elections-pillars,.placeholder-label,.contact-branches,.contact-phone,
 .footer-nav,.contact-legal,.filmstrip-label,.modal-form label,
@@ -175,59 +175,14 @@ button{ font:inherit; background:none; border:none; cursor:pointer; color:inheri
 .scroll-rail--bottom{ bottom:0; }
 
 /* =============================================================
-   Header
+   Logo (legal pages) + brand tick
    ============================================================= */
-.site-header{
-  position:fixed; top:0; left:0; right:0; z-index:960;
-  display:flex; align-items:center; justify-content:space-between;
-  padding:16px var(--gutter);
-  background:rgba(244,241,233,.78); color:var(--ink);
-  -webkit-backdrop-filter:blur(14px); backdrop-filter:blur(14px);
-  border-bottom:1px solid var(--line-light);
-  transition:padding .3s var(--ease), background .3s var(--ease);
-}
 .logo{ display:flex; align-items:center; }
 .logo-mark{ height:30px; width:auto; display:block; }
 
 /* Signal-tick — brand mark used in place of "01/02/03" numbering everywhere */
 .tick{ width:13px; height:13px; flex-shrink:0; fill:var(--signal); }
 .tick--light{ fill:var(--acid); }
-
-/* Jio-style corner "+" nav toggle — the entire nav lives behind this one
-   control (see .nav-panel below); it rotates into an "×" when open. */
-.nav-toggle{
-  position:relative; width:44px; height:44px; flex-shrink:0; z-index:1001;
-  display:flex; align-items:center; justify-content:center;
-}
-.nav-toggle-icon,
-.nav-toggle-icon::before,
-.nav-toggle-icon::after{
-  content:''; position:absolute; background:currentColor; border-radius:2px;
-  transition:transform .4s var(--ease), opacity .3s var(--ease);
-}
-.nav-toggle-icon{ width:18px; height:2px; }
-.nav-toggle-icon::before{ width:18px; height:2px; top:0; left:0; transform:rotate(90deg); }
-.nav-toggle-icon::after{ width:2px; height:2px; opacity:0; }
-.nav-toggle[aria-expanded="true"] .nav-toggle-icon{ transform:rotate(45deg); }
-.nav-toggle[aria-expanded="true"] .nav-toggle-icon::before{ transform:rotate(45deg); }
-
-.nav-panel{
-  position:fixed; inset:0; z-index:950; background:var(--ink); color:var(--paper);
-  display:flex; flex-direction:column; justify-content:center; padding:var(--gutter);
-  transform:translateY(-100%); transition:transform .55s var(--ease);
-  overflow:hidden;
-}
-.nav-panel.is-open{ transform:translateY(0); overflow-y:auto; }
-.nav-panel nav{ display:flex; flex-direction:column; gap:4px; }
-.nav-panel nav a{
-  display:flex; align-items:baseline; gap:20px;
-  font-family:var(--font-display); font-size:clamp(34px,9vw,96px); line-height:1.1; text-transform:uppercase;
-  border-top:1px solid var(--line-dark); padding:10px 0; transition:color .25s var(--ease), padding-left .35s var(--ease);
-}
-.nav-panel nav a:last-child{ border-bottom:1px solid var(--line-dark); }
-.nav-panel nav a:hover{ color:var(--acid); padding-left:14px; }
-.nav-panel-num{ font-family:var(--font-mono); font-size:14px; color:var(--acid); }
-.nav-panel-footer{ margin-top:40px; display:flex; flex-direction:column; gap:8px; font-family:var(--font-mono); font-size:14px; color:var(--paper-dim); }
 
 /* =============================================================
    Buttons
@@ -249,37 +204,7 @@ button{ font:inherit; background:none; border:none; cursor:pointer; color:inheri
    ============================================================= */
 .hero{
   position:relative; min-height:100svh; display:flex; flex-direction:column;
-  justify-content:center; padding:110px var(--gutter) 70px; overflow:hidden;
-}
-/* Ambient rotating brand monogram — sits behind the hero copy, slow
-   continuous 3D spin, low-contrast/multiply so it reads as texture,
-   not a logo callout. Pure CSS/SVG-raster, no video asset required. */
-.hero-monogram{
-  position:absolute; top:50%; right:-8%; transform:translateY(-50%);
-  width:min(42vw,560px); aspect-ratio:1;
-  z-index:0; pointer-events:none;
-  perspective:1400px;
-  opacity:.32; mix-blend-mode:multiply;
-  -webkit-mask-image:linear-gradient(to right, transparent 0%, transparent 10%, #000 42%);
-  mask-image:linear-gradient(to right, transparent 0%, transparent 10%, #000 42%);
-}
-.hero-monogram-spin{
-  width:100%; height:100%; transform-style:preserve-3d; will-change:transform;
-  animation:monogram-spin 17s linear infinite;
-}
-.hero-monogram img{
-  width:100%; height:100%; object-fit:contain; display:block;
-  filter:saturate(.5) contrast(1.05);
-}
-@keyframes monogram-spin{ from{ transform:rotateY(0deg) rotateX(4deg); } to{ transform:rotateY(360deg) rotateX(4deg); } }
-@media (prefers-reduced-motion: reduce){
-  .hero-monogram-spin{ animation:none; transform:rotateY(16deg) rotateX(4deg); }
-}
-@media (max-width:900px){
-  .hero-monogram{ width:min(72vw,440px); right:-16%; opacity:.2; }
-}
-@media (max-width:560px){
-  .hero-monogram{ top:auto; bottom:-10%; right:50%; transform:translateX(50%); width:min(104vw,360px); opacity:.14; }
+  justify-content:center; padding:70px var(--gutter); overflow:hidden;
 }
 .hero-inner{ position:relative; z-index:1; max-width:var(--container); margin:0 auto; width:100%; }
 .eyebrow{ display:flex; align-items:center; gap:10px; font-family:var(--font-mono); font-size:13px; letter-spacing:.08em; text-transform:uppercase; margin-bottom:28px; }
@@ -525,8 +450,8 @@ button{ font:inherit; background:none; border:none; cursor:pointer; color:inheri
    where the eight surrounding cells never compete for attention. */
 .latest-tile--side{ pointer-events:none; opacity:.4; filter:grayscale(.35) brightness(.92); }
 
-/* Center tile (the video) scales up slightly as the section scrolls
-   through view — see main.js's scroll-scrub on #latestVideoTile. */
+/* Center tile (the video) zooms to fill the viewport while the section is
+   pinned — see main.js's scroll-zoom on #latestVideoTile. */
 .latest-tile.has-video{ position:relative; z-index:2; transform-origin:center; will-change:transform; }
 @media (prefers-reduced-motion: reduce){ .latest-tile.has-video{ transform:none !important; } }
 
@@ -543,15 +468,29 @@ button{ font:inherit; background:none; border:none; cursor:pointer; color:inheri
 .latest-tile.has-video .video-backdrop{ object-fit:cover; filter:blur(28px) brightness(.55) saturate(1.3); transform:scale(1.15); }
 .latest-tile.has-video .video-fg{ object-fit:contain; }
 
+/* Media slot — a box locked to the clip's own aspect ratio (--media-ratio,
+   set inline in the markup), contained and centred in the tile. Whatever
+   sits inside (the <video> today, a YouTube <iframe> later) just fills it,
+   and the scroll-zoom only ever measures/scales this box. */
+.latest-tile.has-video{ display:flex; align-items:center; justify-content:center; container-type:size; }
+.latest-media{
+  position:relative; z-index:1; flex:none;
+  width:min(100cqw, 100cqh * var(--media-ratio, 16/9)); aspect-ratio:var(--media-ratio, 16/9);
+}
+.latest-media iframe{ position:absolute; inset:0; width:100%; height:100%; border:0; display:block; }
+
+/* --zoom-counter is set by the scroll-zoom so the button stays its normal
+   on-screen size while the tile around it scales up */
 .latest-tile.has-video .sound-toggle{
   position:absolute; bottom:14px; right:14px; z-index:3;
   width:36px; height:36px; border-radius:50%; border:none; padding:0;
   background:var(--paper); color:var(--ink); cursor:pointer;
   display:flex; align-items:center; justify-content:center;
   box-shadow:0 2px 10px rgba(0,0,0,.35);
+  transform:scale(var(--zoom-counter, 1)); transform-origin:100% 100%;
   transition:background .2s, transform .2s;
 }
-.latest-tile.has-video .sound-toggle:hover{ background:var(--paper); transform:scale(1.08); }
+.latest-tile.has-video .sound-toggle:hover{ background:var(--paper); transform:scale(calc(var(--zoom-counter, 1) * 1.08)); }
 .latest-tile.has-video .sound-toggle svg{ width:17px; height:17px; }
 .latest-tile.has-video .sound-toggle .icon-unmuted{ display:none; }
 .latest-tile.has-video .sound-toggle[aria-pressed="true"] .icon-muted{ display:none; }
@@ -561,10 +500,13 @@ button{ font:inherit; background:none; border:none; cursor:pointer; color:inheri
 /* =============================================================
    Contact / footer
    ============================================================= */
-.contact{ background:var(--ink); color:var(--paper); padding:100px var(--gutter) 40px; }
+/* z-index keeps the footer above the zoomed video tile, which overhangs its
+   section once the pin releases */
+.contact{ position:relative; z-index:3; background:var(--ink); color:var(--paper); padding:100px var(--gutter) 40px; }
 .contact-inner{ max-width:var(--container); margin:0 auto; }
 .contact-headline{ font-size:clamp(52px,11vw,160px); line-height:.92; margin:16px 0 36px; }
 .contact-row{ display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:28px; padding-bottom:44px; border-bottom:1px solid var(--line-dark); }
+.contact-phones{ display:flex; flex-direction:column; gap:6px; }
 .contact-branches{ display:flex; gap:28px; flex-wrap:wrap; font-family:var(--font-mono); font-size:13px; letter-spacing:.04em; text-transform:uppercase; color:var(--paper-dim); margin-top:14px; }
 .contact-branches span{ color:var(--acid); margin-right:6px; }
 .contact-phone{ font-family:var(--font-mono); font-size:clamp(18px,2.4vw,26px); letter-spacing:.02em; }
@@ -638,6 +580,76 @@ button{ font:inherit; background:none; border:none; cursor:pointer; color:inheri
 .to-top.is-visible{ opacity:1; pointer-events:auto; transform:translateY(0); }
 
 /* =============================================================
+   Quick nav — full-screen overlay menu (replaces the old sticky
+   header bar; the "+" toggle is the only thing left in the
+   corner, the menu itself is the same big-type, full-viewport
+   overlay the site used to open from the header).
+   ============================================================= */
+.quick-nav{ position:fixed; top:22px; right:22px; z-index:9650; }
+.quick-nav-toggle{
+  width:50px; height:50px; border-radius:50%; background:var(--ink); color:var(--paper);
+  display:flex; align-items:center; justify-content:center; position:relative;
+  box-shadow:0 8px 22px rgba(0,0,0,.22); transition:transform .25s var(--ease), background .25s;
+}
+.quick-nav-toggle:hover{ transform:scale(1.06); }
+.quick-nav-icon{ width:17px; height:2px; background:currentColor; position:relative; display:block; transition:transform .3s var(--ease); }
+.quick-nav-icon::before{ content:''; position:absolute; inset:0; background:currentColor; transform:rotate(90deg); }
+.quick-nav.is-open .quick-nav-toggle{ background:var(--acid); }
+.quick-nav.is-open .quick-nav-icon{ transform:rotate(45deg); }
+
+html.nav-open{ overflow:hidden; }
+
+.nav-overlay{
+  position:fixed; inset:0; z-index:9400;
+  background:var(--ink); color:var(--paper);
+  display:flex; flex-direction:column; justify-content:center;
+  padding:110px var(--gutter) 60px;
+  opacity:0; visibility:hidden; pointer-events:none;
+  transition:opacity .5s var(--ease), visibility 0s linear .5s;
+}
+.nav-overlay.is-open{
+  opacity:1; visibility:visible; pointer-events:auto;
+  transition:opacity .5s var(--ease), visibility 0s linear 0s;
+}
+.nav-overlay-eyebrow{
+  font-family:var(--font-mono); font-size:12px; letter-spacing:.14em; text-transform:uppercase;
+  opacity:.55; margin-bottom:28px;
+}
+.nav-overlay-menu{ display:flex; flex-direction:column; gap:2px; }
+.nav-overlay-link{
+  font-family:var(--font-display); font-weight:800; text-transform:uppercase;
+  font-size:clamp(40px,8.6vw,104px); line-height:1.05; letter-spacing:-.01em;
+  display:flex; align-items:baseline; gap:20px;
+  color:var(--paper); border-bottom:1px solid var(--line-dark);
+  padding:10px 0; opacity:0; transform:translateY(24px);
+  transition:transform .6s var(--ease), opacity .6s var(--ease), color .25s;
+}
+.nav-overlay.is-open .nav-overlay-link{ opacity:1; transform:translateY(0); }
+.nav-overlay.is-open .nav-overlay-link:nth-child(1){ transition-delay:.08s; }
+.nav-overlay.is-open .nav-overlay-link:nth-child(2){ transition-delay:.14s; }
+.nav-overlay.is-open .nav-overlay-link:nth-child(3){ transition-delay:.2s; }
+.nav-overlay.is-open .nav-overlay-link:nth-child(4){ transition-delay:.26s; }
+.nav-overlay-link:hover{ color:var(--signal); }
+.nav-overlay-num{ font-family:var(--font-mono); font-size:14px; font-weight:400; opacity:.45; }
+.nav-overlay-foot{
+  margin-top:46px; padding-top:22px; border-top:1px solid var(--line-dark);
+  display:flex; flex-wrap:wrap; gap:16px 28px; justify-content:space-between;
+  font-family:var(--font-mono); font-size:13px; opacity:.7;
+}
+.nav-overlay-foot a{ color:var(--paper); }
+.nav-overlay-foot a:hover{ opacity:.75; }
+
+@media (max-width:680px){
+  .quick-nav{ top:16px; right:16px; }
+  .quick-nav-toggle{ width:44px; height:44px; }
+  .nav-overlay{ padding:90px var(--gutter) 40px; }
+  .nav-overlay-link{ font-size:clamp(32px,11vw,56px); gap:12px; }
+}
+@media (prefers-reduced-motion: reduce){
+  .nav-overlay-link{ transition:opacity .2s linear; transform:none; }
+}
+
+/* =============================================================
    Responsive
    ============================================================= */
 @media (max-width:900px){
@@ -648,7 +660,7 @@ button{ font:inherit; background:none; border:none; cursor:pointer; color:inheri
   .latest-grid{ gap:8px; }
   .filmstrip-tile{ width:min(78vw,320px); }
   .lightbox-gallery{ grid-template-columns:1fr; }
-  .hero{ padding:90px var(--gutter) 56px; }
+  .hero{ padding:56px var(--gutter); }
   .services{ padding:64px 0 56px; }
   .elections{ padding:72px var(--gutter); }
   .work{ padding:72px 0; }
@@ -667,7 +679,7 @@ button{ font:inherit; background:none; border:none; cursor:pointer; color:inheri
    a masonry grid of full-bleed cards (mixed sizes), each one a link
    to its own case page.
    ============================================================= */
-.workfolio-hero{ padding:150px var(--gutter) 30px; max-width:var(--container); margin:0 auto; }
+.workfolio-hero{ padding:72px var(--gutter) 30px; max-width:var(--container); margin:0 auto; }
 .workfolio-hero h1{ font-size:clamp(34px,6.5vw,64px); line-height:1; margin:0 0 18px; }
 .workfolio-hero-rule{ height:2px; background:var(--ink); margin-bottom:0; }
 .workfolio-hero-sub{ max-width:560px; font-size:clamp(14px,1.4vw,16px); opacity:.65; margin-top:18px; }
@@ -709,12 +721,12 @@ button{ font:inherit; background:none; border:none; cursor:pointer; color:inheri
 @media (prefers-reduced-motion: reduce){ .workfolio-card-media img{ transition:none; } }
 @media (max-width:680px){
   .workfolio-grid{ columns:1; }
-  .workfolio-hero{ padding:120px var(--gutter) 24px; }
+  .workfolio-hero{ padding:48px var(--gutter) 24px; }
 }
 
 /* ---- Case detail page (work/<client>.html) ---- */
 .case-back{
-  display:inline-flex; align-items:center; gap:10px; margin:130px var(--gutter) 0;
+  display:inline-flex; align-items:center; gap:10px; margin:56px var(--gutter) 0;
   font-family:var(--font-mono); font-size:13px; text-transform:uppercase; letter-spacing:.04em;
   color:var(--ink); opacity:.7; transition:opacity .2s, transform .2s var(--ease);
 }

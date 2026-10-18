@@ -125,7 +125,39 @@
   });
 
   /* ---------------------------------------------------------
-     Header: internal anchor links use Lenis
+     Quick nav — full-screen overlay menu (the old header's
+     "+" opened this same overlay; only the sticky bar around
+     it is gone). Big stacked links, Jio-style.
+     --------------------------------------------------------- */
+  var quickNav = document.getElementById('quickNav');
+  var quickNavToggle = document.getElementById('quickNavToggle');
+  var navOverlay = document.getElementById('quickNavOverlay');
+  if (quickNav && quickNavToggle && navOverlay){
+    var setNavOpen = function(open){
+      quickNav.classList.toggle('is-open', open);
+      navOverlay.classList.toggle('is-open', open);
+      navOverlay.setAttribute('aria-hidden', open ? 'false' : 'true');
+      quickNavToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      document.documentElement.classList.toggle('nav-open', open);
+      if (lenis){ if (open) lenis.stop(); else lenis.start(); }
+    };
+    quickNavToggle.addEventListener('click', function(e){
+      e.stopPropagation();
+      setNavOpen(!quickNav.classList.contains('is-open'));
+    });
+    navOverlay.addEventListener('click', function(e){
+      if (e.target === navOverlay) setNavOpen(false);
+    });
+    navOverlay.querySelectorAll('a').forEach(function(a){
+      a.addEventListener('click', function(){ setNavOpen(false); });
+    });
+    document.addEventListener('keydown', function(e){
+      if (e.key === 'Escape' && quickNav.classList.contains('is-open')) setNavOpen(false);
+    });
+  }
+
+  /* ---------------------------------------------------------
+     Internal anchor links (footer nav, hero CTA) use Lenis
      --------------------------------------------------------- */
   document.querySelectorAll('a[href^="#"]').forEach(function(link){
     link.addEventListener('click', function(e){
@@ -136,31 +168,8 @@
       e.preventDefault();
       if (lenis) lenis.scrollTo(target, { duration: 1.2, offset: 0 });
       else target.scrollIntoView({ behavior:'smooth' });
-      closeMobileMenu();
     });
   });
-
-  /* ---------------------------------------------------------
-     Nav panel — the single "+" corner button opens/closes it
-     --------------------------------------------------------- */
-  var navToggle = document.getElementById('navToggle');
-  var navPanel = document.getElementById('navPanel');
-  function closeMobileMenu(){
-    if (!navPanel) return;
-    navPanel.classList.remove('is-open');
-    navPanel.setAttribute('aria-hidden', 'true');
-    navToggle.setAttribute('aria-expanded', 'false');
-  }
-  if (navToggle && navPanel){
-    navToggle.addEventListener('click', function(){
-      var open = navPanel.classList.toggle('is-open');
-      navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-      navPanel.setAttribute('aria-hidden', open ? 'false' : 'true');
-    });
-    document.addEventListener('keydown', function(e){
-      if (e.key === 'Escape' && navPanel.classList.contains('is-open')) closeMobileMenu();
-    });
-  }
 
   /* ---------------------------------------------------------
      Custom cursor + magnetic buttons (desktop only)
@@ -288,16 +297,74 @@
       });
     }
 
-    /* "What's going on" center tile: the video quietly zooms in as the
-       section scrolls through view (Jio's center-ad treatment) — the
-       eight surrounding tiles are static/faded via CSS, nothing to
-       animate there. */
-    var latestVideoTile = document.getElementById('latestVideoTile');
-    if (latestVideoTile){
-      gsap.fromTo(latestVideoTile, { scale:0.92 }, {
-        scale:1.08, ease:'none',
-        scrollTrigger:{ trigger:'.latest', start:'top 85%', end:'bottom 30%', scrub:0.6 }
-      });
+    /* "What's going on" center video: when the tile's center reaches the
+       middle of the viewport the section pins, the tile scales up until it
+       covers the screen and the eight side tiles slide out and fade; after a
+       short hold the pin releases and the page scrolls on (the footer then
+       slides over the still-zoomed tile — see .contact's z-index).
+       Everything is transform/opacity only. The tile scales to COVER the
+       viewport (its blurred backdrop fills the screen) while the media slot
+       inside is counter-scaled so the clip itself ends up CONTAINED, never
+       cropped — so the clip's shape, or swapping the <video> for an
+       <iframe>, needs no change here. */
+    var zoomTile = document.getElementById('latestVideoTile');
+    var zoomSection = zoomTile ? zoomTile.closest('.latest') : null;
+    var zoomMedia = zoomTile ? zoomTile.querySelector('.latest-media') : null;
+    if (zoomTile && zoomSection && zoomMedia){
+      var zoomToggle = zoomMedia.querySelector('.sound-toggle');
+      var zoomGrid = Array.prototype.slice.call(zoomTile.parentNode.children);
+      var zoomSides = zoomGrid.filter(function(el){ return el !== zoomTile; });
+      var zoomCenter = zoomGrid.indexOf(zoomTile);
+      var zoomFit = { cover: 1, contain: 1 };
+      var zoomState = { p: 0 };
+      // quickSetter ignores the "scale" shorthand, so drive scaleX + scaleY
+      function scaleSetter(el){
+        var sx = gsap.quickSetter(el, 'scaleX'), sy = gsap.quickSetter(el, 'scaleY');
+        return function(v){ sx(v); sy(v); };
+      }
+      var setTileScale = scaleSetter(zoomTile);
+      var setMediaScale = scaleSetter(zoomMedia);
+
+      // offset* are layout sizes, unaffected by the zoom's own transforms,
+      // so this is safe to re-run mid-animation on resize/refresh
+      function measureZoom(){
+        var vw = document.documentElement.clientWidth, vh = window.innerHeight;
+        zoomFit.cover = Math.max(vw / zoomTile.offsetWidth, vh / zoomTile.offsetHeight) * 1.02;
+        zoomFit.contain = Math.min(vw / zoomMedia.offsetWidth, vh / zoomMedia.offsetHeight);
+      }
+      function paintZoom(){
+        // tile and clip each grow linearly to their own target; the media
+        // slot's own scale is just the ratio between the two
+        var tile = 1 + (zoomFit.cover - 1) * zoomState.p;
+        var clip = 1 + (zoomFit.contain - 1) * zoomState.p;
+        setTileScale(tile);
+        setMediaScale(clip / tile);
+        if (zoomToggle) zoomToggle.style.setProperty('--zoom-counter', 1 / clip);
+      }
+      // grid step (-1/0/1) from the center cell — side tiles exit away from it
+      function gridStep(el, axis){
+        var i = zoomGrid.indexOf(el);
+        return axis === 'x' ? (i % 3) - (zoomCenter % 3) : Math.floor(i / 3) - Math.floor(zoomCenter / 3);
+      }
+
+      measureZoom();
+      gsap.timeline({
+        scrollTrigger: {
+          trigger: zoomTile,
+          start: 'center center',
+          end: function(){ return '+=' + Math.round(window.innerHeight * 1.6); },
+          pin: zoomSection,
+          scrub: 0.6,
+          onRefresh: function(){ measureZoom(); paintZoom(); },
+        }
+      })
+        .to(zoomState, { p: 1, duration: 1, ease: 'power2.inOut', onUpdate: paintZoom }, 0)
+        .to(zoomSides, {
+          xPercent: function(i, el){ return gridStep(el, 'x') * 45; },
+          yPercent: function(i, el){ return gridStep(el, 'y') * 45; },
+          scale: 0.82, opacity: 0, duration: 0.7, ease: 'power2.in'
+        }, 0)
+        .to({}, { duration: 0.6 }); // hold full-screen before the pin releases
     }
 
     /* Generic fade-up reveal for section heads, cards, rows */
