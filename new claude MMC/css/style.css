@@ -82,7 +82,7 @@
 }
 
 *,*::before,*::after{ box-sizing:border-box; }
-html{ scroll-behavior:auto; }
+html{ scroll-behavior:auto; overflow-x:hidden; }
 body{
   margin:0;
   background:var(--paper);
@@ -356,7 +356,7 @@ button{ font:inherit; background:none; border:none; cursor:pointer; color:inheri
    Lightbox (elections case galleries)
    ============================================================= */
 .lightbox{
-  position:fixed; inset:0; z-index:9500; display:flex; align-items:center; justify-content:center;
+  position:fixed; inset:0; z-index:9700; display:flex; align-items:center; justify-content:center;
   padding:var(--gutter); opacity:0; pointer-events:none; transition:opacity .35s var(--ease);
 }
 .lightbox.is-open{ opacity:1; pointer-events:auto; }
@@ -440,7 +440,7 @@ button{ font:inherit; background:none; border:none; cursor:pointer; color:inheri
 /* =============================================================
    Latest work grid
    ============================================================= */
-.latest{ padding:0 0 100px; background:var(--paper); }
+.latest{ padding:0 0 100px; background:var(--paper); overflow:hidden; }
 .latest-grid{ max-width:var(--container); margin:0 auto; padding:0 var(--gutter); display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
 .latest-tile{ aspect-ratio:4/5; position:relative; }
 .latest-tile img{ width:100%; height:100%; object-fit:cover; border-radius:14px; }
@@ -530,7 +530,7 @@ button{ font:inherit; background:none; border:none; cursor:pointer; color:inheri
    Contact modal (opens on CTA click, submits via WhatsApp)
    ============================================================= */
 .modal{
-  position:fixed; inset:0; z-index:9600; display:flex; align-items:center; justify-content:center;
+  position:fixed; inset:0; z-index:9700; display:flex; align-items:center; justify-content:center;
   padding:var(--gutter); opacity:0; pointer-events:none; transition:opacity .35s var(--ease);
 }
 .modal.is-open{ opacity:1; pointer-events:auto; }
