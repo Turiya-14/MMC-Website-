@@ -13,6 +13,27 @@
   }
 
   /* ---------------------------------------------------------
+     Keep ScrollTrigger's pin/scrub math in sync with real page
+     height. Lazy-loaded images (the 40 client logos, manifesto
+     photos, filmstrip tiles — anything with loading="lazy") finish
+     loading AFTER GSAP's initial measurements and quietly shift
+     everything below them; the same thing happens the moment a new
+     section is added to the page. Without this, every pinned/scrub
+     section below the shift (the manifesto orbit, the showpiece
+     filmstrip) drifts out of sync with the scrollbar — scroll feels
+     "stuck" or snaps — until the next manual resize/refresh. A
+     single debounced ResizeObserver on <body> catches all of these
+     causes at once, generically, instead of patching each one. */
+  if (hasGSAP && window.ScrollTrigger && typeof ResizeObserver !== 'undefined'){
+    var stRefreshTimer = null;
+    var scheduleSTRefresh = function(){
+      clearTimeout(stRefreshTimer);
+      stRefreshTimer = setTimeout(function(){ ScrollTrigger.refresh(); }, 120);
+    };
+    new ResizeObserver(scheduleSTRefresh).observe(document.body);
+  }
+
+  /* ---------------------------------------------------------
      Lenis smooth scroll (skip on touch / reduced motion)
      --------------------------------------------------------- */
   var lenis = null;
@@ -267,7 +288,14 @@
           trigger: '.manifesto',
           start: 'top top',
           end: 'bottom bottom',
-          scrub: 0.6,
+          // scrub:true (not a number) — Lenis already smooths the scroll
+          // position itself; stacking a scrub delay (e.g. 0.6) on top of
+          // that added a second, independent lag, so the orbit kept
+          // drifting/rotating for a beat after the wheel stopped instead
+          // of tracking the scrollbar directly. That's what read as the
+          // panels ("We run the panel." / "We book the outdoor.") feeling
+          // laggy/unsmooth.
+          scrub: true,
           onRefresh: layoutRing,
         }
       });
@@ -368,7 +396,7 @@
     }
 
     /* Generic fade-up reveal for section heads, cards, rows */
-    gsap.utils.toArray('.section-head, .service-row, .why-card, .featured-case, .logo-tile, .elections-inner').forEach(function(el){
+    gsap.utils.toArray('.section-head, .service-row, .why-card, .featured-case, .logo-tile, .elections-inner, .channel-card').forEach(function(el){
       gsap.fromTo(el, { opacity:0, y:36 }, {
         opacity:1, y:0, duration:0.9, ease:'power3.out',
         scrollTrigger: { trigger:el, start:'top 88%' }
