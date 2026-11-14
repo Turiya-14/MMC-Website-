@@ -1,0 +1,53 @@
+/* Local review prototype. All rules are scoped to the new hero. */
+.campaign-hero{max-width:1600px;margin:auto;padding:26px var(--gutter) 0;color:var(--ink)}
+.campaign-hero .canvas-topline{display:flex;align-items:center;justify-content:space-between;padding:0 68px 22px 0;border-bottom:1px solid var(--line-light);gap:20px}
+.campaign-hero .canvas-topline img{width:150px;height:auto}
+.campaign-hero .canvas-topline>span{font-size:11px;letter-spacing:.04em}
+.campaign-hero .canvas-layout{display:grid;grid-template-columns:40fr 60fr;align-items:center;min-height:650px;padding:30px 0 24px}
+.campaign-hero .canvas-copy{position:relative;z-index:2;padding:0 16px 0 0}
+.campaign-hero .canvas-eyebrow{font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;margin-bottom:26px;color:var(--signal-dim)}
+.campaign-hero h1{font-size:clamp(36px,4.8vw,70px);line-height:1.03;letter-spacing:-.055em;font-weight:700}
+.campaign-hero .canvas-mask{display:block;overflow:hidden;padding-bottom:.08em;margin-bottom:-.08em}
+.campaign-hero .canvas-mask>span{display:block}
+.campaign-hero .canvas-blue{color:var(--signal)}
+.campaign-hero .canvas-sub{font-size:clamp(14px,1.3vw,18px);margin:27px 0 28px;line-height:1.6}
+.campaign-hero .canvas-cta>span{display:flex;align-items:center;gap:30px}
+.campaign-hero .canvas-location{font-size:11px;opacity:.55;margin-top:28px}
+.campaign-hero .canvas-art{position:relative;height:590px;isolation:isolate}
+.campaign-hero .canvas-art:before{content:'';position:absolute;inset:38px 6px 38px 25px;border:1px solid var(--line-light);z-index:-1}
+.campaign-hero .canvas-index{position:absolute;top:5px;left:24px;font-size:9px;font-weight:600;letter-spacing:.13em}
+.campaign-hero .canvas-piece{position:absolute;display:block;box-shadow:0 12px 28px rgba(10,16,23,.13);background:var(--paper);will-change:transform}
+.campaign-hero figure{margin:0;padding:7px 7px 0}
+.campaign-hero .canvas-piece img{width:100%;height:auto;object-fit:contain}
+.campaign-hero figcaption{display:flex;flex-direction:column;gap:3px;padding:9px 2px 10px;font-size:10px;font-weight:600;line-height:1.4}
+.campaign-hero figcaption span:first-child{font-size:7px;letter-spacing:.08em;opacity:.6}
+.campaign-hero .canvas-piece--goa{width:49%;left:2%;top:55px;transform:rotate(-6deg);z-index:2}
+.campaign-hero .canvas-piece--content{width:40%;right:0;top:40px;transform:rotate(7deg);z-index:1}
+.campaign-hero .canvas-piece--whatsapp{width:32%;right:6%;top:225px;transform:rotate(5deg);z-index:3}
+.campaign-hero .canvas-note{position:absolute;left:7%;bottom:22px;font-size:12px;line-height:1.5;color:var(--signal-dim)}
+.campaign-hero .canvas-next{display:flex;justify-content:space-between;gap:20px;border-top:1px solid var(--line-light);padding:20px 0 24px;font-size:10px;letter-spacing:.04em}
+.campaign-hero .canvas-next span:last-child{color:var(--signal-dim)}
+.campaign-hero .canvas-piece:focus-visible,.campaign-hero a:focus-visible{outline:3px solid var(--signal-dim);outline-offset:5px}
+@media(min-width:1500px){.campaign-hero .canvas-art{height:670px}.campaign-hero .canvas-piece--whatsapp{top:255px}}
+@media(max-width:1000px) and (min-width:701px){.campaign-hero .canvas-art{height:500px}.campaign-hero .canvas-layout{min-height:560px}.campaign-hero .canvas-piece--whatsapp{top:200px}.campaign-hero .canvas-note{bottom:30px}}
+@media(max-width:700px){
+ .campaign-hero{padding-top:22px}
+ .campaign-hero .canvas-topline{padding-right:48px;padding-bottom:18px}
+ .campaign-hero .canvas-topline img{width:130px}
+ .campaign-hero .canvas-topline>span{display:none}
+ .campaign-hero .canvas-layout{grid-template-columns:1fr;min-height:0;padding-top:32px;gap:26px}
+ .campaign-hero .canvas-copy{padding:0}
+ .campaign-hero h1{font-size:clamp(36px,9vw,60px)}
+ .campaign-hero .canvas-mask{display:inline-block;margin-right:.12em}
+ .campaign-hero .canvas-eyebrow{margin-bottom:18px;font-size:9px}
+ .campaign-hero .canvas-sub{margin:18px 0 20px}
+ .campaign-hero .canvas-location{margin-top:18px}
+ .campaign-hero .canvas-art{height:clamp(360px,100vw,600px);margin:0 4px}
+ .campaign-hero .canvas-piece--goa{top:55px;width:48%}
+ .campaign-hero .canvas-piece--content{top:38px;width:39%}
+ .campaign-hero .canvas-piece--whatsapp{top:40%;width:32%;right:4%}
+ .campaign-hero .canvas-index{left:0;font-size:8px}
+ .campaign-hero .canvas-note{bottom:4%;left:3%;font-size:10px}
+ .campaign-hero .canvas-next{font-size:9px}
+}
+@media(prefers-reduced-motion:reduce){.campaign-hero .canvas-piece{will-change:auto}}
