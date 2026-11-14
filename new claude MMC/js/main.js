@@ -123,16 +123,16 @@
       return;
     }
 
-    if (!hasGSAP){
-      document.querySelectorAll('.hero-headline .word').forEach(function(w){ w.style.transform = 'translateY(0)'; });
-      return;
-    }
-    gsap.to('.hero-headline .word', {
-      y: '0%', duration: 1.1, ease: 'power4.out', stagger: 0.045
-    });
-    gsap.fromTo('.eyebrow', { opacity:0, y:12 }, { opacity:1, y:0, duration:.8, delay:.1 });
-    gsap.fromTo('.hero-sub, .hero-cta-row', { opacity:0, y:16 }, { opacity:1, y:0, duration:.8, delay:.5, stagger:.08 });
-    gsap.fromTo('.scroll-cue', { opacity:0 }, { opacity:1, duration:.8, delay:1 });
+    /* "The Broadcast" hero: headline lines rise in, the megaphone pops.
+       Only in live (scroll-driven) mode — otherwise the hero is already
+       showing its finished static frame. */
+    var bcIntro = document.getElementById('hero');
+    if (!hasGSAP || !bcIntro || !bcIntro.classList.contains('bc--live')) return;
+    gsap.to(bcIntro.querySelectorAll('.bc-h1 .bc-line > span'), { '--in':1, duration:1.2, ease:'power4.out', stagger:.1 });
+    gsap.fromTo(bcIntro.querySelector('.bc-pop'), { scale:.55, rotate:-25, opacity:0 },
+      { scale:1, rotate:0, opacity:1, duration:1.3, ease:'back.out(1.6)', delay:.15 });
+    gsap.to(bcIntro.querySelectorAll('.bc-brand, .bc-eyebrow, .bc-vol'),
+      { opacity:1, duration:.8, delay:.45, stagger:.1, clearProps:'opacity' });
   }
 
   /* ---------------------------------------------------------
@@ -234,6 +234,15 @@
       el.addEventListener('mouseleave', function(){ el.style.transform = ''; });
     });
 
+    /* Hero channel cards lean with the mouse (CSS reads --mx/--my) */
+    var bcHero = document.getElementById('hero');
+    if (bcHero && bcHero.classList.contains('bc') && !prefersReduced){
+      bcHero.addEventListener('mousemove', function(e){
+        bcHero.style.setProperty('--mx', (e.clientX / window.innerWidth * 2 - 1).toFixed(3));
+        bcHero.style.setProperty('--my', (e.clientY / window.innerHeight * 2 - 1).toFixed(3));
+      });
+    }
+
     /* Footer spheres lean gently with the mouse (CSS reads --mx/--my) */
     var contactEl = document.getElementById('contact');
     if (contactEl && !prefersReduced){
@@ -253,6 +262,40 @@
      Scroll-triggered reveals (only if GSAP present)
      --------------------------------------------------------- */
   if (hasGSAP && window.ScrollTrigger && !prefersReduced){
+
+    /* Hero — "The Broadcast". The section becomes a tall pinned stage
+       (.bc--live) and one scrubbed timeline tweens the CSS progress
+       variables that style.css turns into the three scenes. Starting
+       values are set here; the stylesheet defaults are the final frame. */
+    var bcEl = document.getElementById('hero');
+    if (bcEl && bcEl.classList.contains('bc')){
+      bcEl.classList.add('bc--live');
+      bcEl.classList.remove('bc-final');
+      var bcCards = gsap.utils.toArray(bcEl.querySelectorAll('.bc-card'));
+      gsap.set(bcEl, { '--h1':0, '--m':0, '--f':0, '--mq':0, '--spread':1, '--cs':1, '--out':0, '--h3':0, '--vol':0 });
+      gsap.set(bcCards, { '--p':0 });
+      gsap.set(bcEl.querySelectorAll('.bc-h1 .bc-line > span'), { '--in':0 });
+      gsap.set(bcEl.querySelectorAll('.bc-pop, .bc-brand, .bc-eyebrow, .bc-vol'), { opacity:0 });
+
+      gsap.timeline({
+        defaults:{ ease:'none' },
+        scrollTrigger:{
+          trigger:bcEl, start:'top top', end:'bottom bottom', scrub:0.8,
+          onUpdate:function(st){ bcEl.classList.toggle('bc-final', st.progress > 0.78); }
+        }
+      })
+        .to(bcEl, { '--vol':1, duration:10 }, 0)
+        .to(bcEl, { '--h1':1, duration:1.4, ease:'power2.in' }, 0.3)        // "We don't run ads." leaves
+        .to(bcEl, { '--m':1, duration:2.2, ease:'power2.inOut' }, 0.5)      // megaphone to centre
+        .to(bcEl, { '--f':1, duration:2.6, ease:'power2.inOut' }, 0.8)      // blue floods out of it
+        .to(bcCards, { '--p':1, duration:2, ease:'back.out(1.6)', stagger:0.2 }, 1.9) // channels burst out
+        .to(bcEl, { '--mq':1, duration:1, ease:'power1.out' }, 2.1)
+        .fromTo(bcEl.querySelector('.bc-marquee-track'), { xPercent:0 }, { xPercent:-30, duration:5 }, 1.8)
+        .to(bcEl, { '--mq':0, duration:1 }, 5.3)
+        .to(bcEl, { '--spread':1.18, '--cs':.86, duration:2.2, ease:'power1.inOut' }, 5.1) // channels open into an orbit
+        .to(bcEl, { '--out':1, duration:1.5, ease:'power2.in' }, 5.1)       // megaphone bows out
+        .to(bcEl, { '--h3':1, duration:2.2, ease:'power3.out' }, 6.1);      // "We build brands."
+    }
 
     /* Manifesto: pinned 3D orbit. Panels are arranged in a circle in 3D
        space (base transform set once below); scrolling spins the shared

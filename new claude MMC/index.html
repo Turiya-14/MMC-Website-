@@ -67,27 +67,122 @@
 
 <main id="top">
 
-  <!-- ============ HERO ============ -->
-  <section class="hero" id="hero">
+  <!-- ============ HERO — "THE BROADCAST" ============
+       A pinned, scroll-driven stage built around the MMC megaphone:
+       1. cream stage, "We don't run ads."
+       2. blue floods out of the megaphone and every channel bursts out
+       3. the channels orbit "We build brands." + CTAs
+       Visual copy is aria-hidden; the real headline is the visually-hidden h1.
+       Layout lives in style.css ("Hero — The Broadcast"), motion in main.js. -->
+  <section class="bc bc-final" id="hero">
+    <h1 class="visually-hidden">MakeMyCampaign — we don't run ads. We build brands.</h1>
+    <div class="bc-pin">
 
-    <div class="hero-inner">
-      <p class="eyebrow"><span class="eyebrow-dot"></span> Headquartered in Nashik — working across India</p>
-      <h1 class="hero-headline" id="heroHeadline">
-        <span class="line"><span class="word">WE</span> <span class="word">DON'T</span></span>
-        <span class="line"><span class="word">RUN</span> <span class="word">ADS.</span></span>
-        <span class="line"><span class="word word--accent">WE</span> <span class="word word--accent">BUILD</span></span>
-        <span class="line"><span class="word word--accent">BRANDS.</span></span>
-      </h1>
-      <p class="hero-sub">WhatsApp &amp; CPaaS · ATL · Digital · Activation · Elections — one creative engine, built out of Nashik.</p>
-      <div class="hero-cta-row">
-        <button type="button" class="btn btn--solid magnetic js-open-contact"><span>Start Your Campaign</span></button>
-        <a href="#work" class="btn btn--ghost magnetic"><span>See the work</span></a>
+      <div class="bc-flood" aria-hidden="true"></div>
+
+      <div class="bc-marquee" aria-hidden="true">
+        <div class="bc-marquee-track">Make some noise! Make some noise! Make some noise! Make some noise!</div>
       </div>
+
+      <a href="#top" class="bc-brand" aria-label="MakeMyCampaign home">
+        <img src="assets/logo/mark-320.png" width="486" height="320" alt="">
+        <span class="bc-brand-word" aria-hidden="true">MakeMy<b>Campaign</b></span>
+      </a>
+      <p class="bc-eyebrow"><span class="eyebrow-dot"></span> Headquartered in Nashik — working across India</p>
+
+      <div class="bc-h1" aria-hidden="true">
+        <span class="bc-line"><span>We don't</span></span>
+        <span class="bc-line"><span>run ads.</span></span>
+      </div>
+
+      <div class="bc-rings" aria-hidden="true"><span></span><span></span><span></span></div>
+
+      <!-- every channel MMC runs — they burst out of the megaphone on scroll -->
+      <div class="bc-cards" aria-hidden="true">
+        <div class="bc-card bc-card--chat"><div class="bc-card-in">
+          <div class="bc-chat">
+            <div class="bc-chat-top"><img src="assets/logo/mark-320.png" alt=""><span><b>MakeMyCampaign</b><small>online</small></span></div>
+            <p class="bc-bubble">Hi Riya! Your festive offer is live 🎉 Tap to claim.</p>
+            <p class="bc-bubble bc-bubble--me">Booked it! 🙌<span class="bc-ticks">✓✓</span></p>
+          </div>
+          <span class="bc-chip">WhatsApp &amp; CPaaS</span>
+        </div></div>
+
+        <div class="bc-card bc-card--poster"><div class="bc-card-in">
+          <div class="bc-poster"><img src="assets/goa1.jpg" alt=""></div>
+          <span class="bc-chip">Elections</span>
+        </div></div>
+
+        <div class="bc-card bc-card--board"><div class="bc-card-in">
+          <div class="bc-board"><p>Your brand,<br>this big.</p><img src="assets/logo/mark-320.png" alt=""></div>
+          <span class="bc-board-legs"></span>
+          <span class="bc-chip">Outdoor &amp; ATL</span>
+        </div></div>
+
+        <div class="bc-card bc-card--phone"><div class="bc-card-in">
+          <div class="bc-phone"><video src="assets/reel-promo.mp4" muted loop autoplay playsinline preload="metadata"></video></div>
+          <span class="bc-hearts"><i>♥</i><i>♥</i><i>♥</i></span>
+          <span class="bc-chip">Reels &amp; Social</span>
+        </div></div>
+
+        <div class="bc-card bc-card--tv"><div class="bc-card-in">
+          <div class="bc-tv"><img src="assets/channels/tgs-post-1.jpg" alt=""><span class="bc-live">● Live</span></div>
+          <span class="bc-tv-stand"></span>
+          <span class="bc-chip">TV &amp; Video</span>
+        </div></div>
+
+        <div class="bc-card bc-card--paper"><div class="bc-card-in">
+          <div class="bc-paper">
+            <p class="bc-paper-mast">The Daily Campaign</p>
+            <p class="bc-paper-meta"><span>Nashik edition</span><span>Morning</span></p>
+            <p class="bc-paper-head">Local brand becomes the talk of the town</p>
+            <img src="assets/channels/tgs-post-2.jpg" alt="">
+            <span class="bc-paper-lines"><i></i><i></i><i></i><i></i></span>
+          </div>
+          <span class="bc-chip">Print</span>
+        </div></div>
+
+        <div class="bc-card bc-card--ticket"><div class="bc-card-in">
+          <div class="bc-ticket">
+            <div class="bc-ticket-main"><small>Admit one</small><b>Live!</b><small>Activation · Nashik</small></div>
+            <div class="bc-ticket-stub">№ 0001</div>
+          </div>
+          <span class="bc-chip">Activation &amp; Events</span>
+        </div></div>
+
+        <div class="bc-card bc-card--talent"><div class="bc-card-in">
+          <div class="bc-avatar"><img src="assets/channels/temple-post-4.jpg" alt=""></div>
+          <span class="bc-avatar-live">Live</span>
+          <span class="bc-chip">Talent &amp; Influencers</span>
+        </div></div>
+      </div>
+
+      <!-- the megaphone itself -->
+      <div class="bc-core" aria-hidden="true">
+        <div class="bc-pop">
+          <span class="bc-disc"></span>
+          <img class="bc-mega" src="assets/logo/mark-1000.png" width="1520" height="1000" alt="">
+        </div>
+      </div>
+
+      <div class="bc-h3">
+        <p class="bc-h3-title" aria-hidden="true">
+          <span class="bc-line"><span>We build</span></span>
+          <span class="bc-line"><span>brands.<svg class="bc-scribble" viewBox="0 0 300 30" preserveAspectRatio="none"><path pathLength="100" d="M4 20C60 8 120 6 180 12s80 10 114 0"/></svg></span></span>
+        </p>
+        <p class="bc-sub">WhatsApp &amp; CPaaS · ATL · Digital · Activation · Elections — one creative engine, built out of Nashik.</p>
+        <div class="bc-cta-row">
+          <button type="button" class="btn btn--solid magnetic js-open-contact"><span>Start your campaign</span></button>
+          <a href="#work" class="btn btn--outline-light magnetic"><span>See the work</span></a>
+        </div>
+      </div>
+
+      <div class="bc-vol" aria-hidden="true">
+        <span class="bc-vol-label">Scroll to turn it up</span>
+        <span class="bc-vol-bars"><i style="--i:0"></i><i style="--i:1"></i><i style="--i:2"></i><i style="--i:3"></i><i style="--i:4"></i><i style="--i:5"></i><i style="--i:6"></i><i style="--i:7"></i><i style="--i:8"></i><i style="--i:9"></i></span>
+      </div>
+
     </div>
-    <button class="scroll-cue" id="scrollCue" aria-label="Scroll down">
-      <span>Scroll</span>
-      <svg width="14" height="20" viewBox="0 0 14 20" fill="none"><path d="M7 1V19M7 19L1 13M7 19L13 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    </button>
   </section>
 
   <!-- ============ MANIFESTO (pinned 3D orbit — what we do) ============ -->
