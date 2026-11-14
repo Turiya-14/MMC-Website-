@@ -625,13 +625,77 @@
     });
   }
 
+  /* ---------------------------------------------------------
+     Showpiece reels ("We build brands." filmstrip): the videos are
+     heavy, so each one gets its src only once the section is within
+     ~1.5 screens, plays only while its tile is on screen, and pauses
+     when it leaves. Reduced-motion visitors get a still first frame
+     until they press the speaker. Only one reel has sound at a time.
+     --------------------------------------------------------- */
+  var reelVideos = Array.prototype.slice.call(document.querySelectorAll('.filmstrip-tile video[data-src]'));
+  if (reelVideos.length){
+    var loadReel = function(v){
+      if (v.getAttribute('src')) return;
+      v.src = v.getAttribute('data-src');
+      v.preload = 'auto';
+      v.load();
+    };
+    var setReelSound = function(v, on){
+      v.muted = !on;
+      var b = v.parentElement.querySelector('.filmstrip-sound');
+      if (b){
+        b.setAttribute('aria-pressed', on ? 'true' : 'false');
+        b.setAttribute('aria-label', on ? 'Mute video' : 'Unmute video');
+      }
+    };
+
+    if ('IntersectionObserver' in window){
+      var reelLoadObs = new IntersectionObserver(function(entries){
+        if (entries.some(function(en){ return en.isIntersecting; })){
+          reelVideos.forEach(loadReel);
+          reelLoadObs.disconnect();
+        }
+      }, { rootMargin:'150% 0px' });
+      reelLoadObs.observe(document.getElementById('showpiece') || reelVideos[0]);
+
+      var reelPlayObs = new IntersectionObserver(function(entries){
+        entries.forEach(function(en){
+          var v = en.target;
+          if (en.isIntersecting){
+            loadReel(v);
+            if (!prefersReduced || !v.muted) v.play().catch(function(){});
+          } else {
+            v.pause();
+          }
+        });
+      }, { threshold:0.25 });
+      reelVideos.forEach(function(v){ reelPlayObs.observe(v); });
+    } else {
+      reelVideos.forEach(function(v){ loadReel(v); if (!prefersReduced) v.play().catch(function(){}); });
+    }
+
+    document.querySelectorAll('.filmstrip-sound').forEach(function(btn){
+      var v = btn.parentElement.querySelector('video');
+      if (!v) return;
+      btn.addEventListener('click', function(e){
+        e.preventDefault();
+        e.stopPropagation();
+        var turnOn = v.muted;
+        reelVideos.forEach(function(o){ if (o !== v && !o.muted) setReelSound(o, false); });
+        setReelSound(v, turnOn);
+        if (turnOn){ loadReel(v); v.play().catch(function(){}); }
+      });
+    });
+  }
+
   /* footer year */
   var yearEl = document.getElementById('year');
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-  /* pause autoplaying brand-video tile under reduced motion, show first frame */
+  /* pause autoplaying brand-video tile (and workfolio card clips) under
+     reduced motion, show first frame */
   if (prefersReduced) {
-    document.querySelectorAll('.latest-tile.has-video video').forEach(function(v){
+    document.querySelectorAll('.latest-tile.has-video video, .wf-card video').forEach(function(v){
       v.removeAttribute('autoplay');
       v.pause();
       v.currentTime = 0;

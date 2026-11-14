@@ -34,10 +34,10 @@
 <div class="nav-overlay" id="quickNavOverlay" aria-hidden="true">
   <p class="nav-overlay-eyebrow">Menu</p>
   <nav class="nav-overlay-menu" aria-label="Main navigation">
-    <a href="index.html" class="nav-overlay-link"><span class="nav-overlay-num">01</span>Home</a>
-    <a href="index.html#services" class="nav-overlay-link"><span class="nav-overlay-num">02</span>Services</a>
-    <a href="work.html" class="nav-overlay-link"><span class="nav-overlay-num">03</span>Work</a>
-    <a href="index.html#contact" class="nav-overlay-link"><span class="nav-overlay-num">04</span>Contact</a>
+    <a href="index.html" class="nav-overlay-link"><span class="nav-overlay-bullet" aria-hidden="true"><svg class="tick" viewBox="0 0 16 16"><rect x="1" y="9" width="3" height="6" rx="1"/><rect x="6.5" y="5" width="3" height="10" rx="1"/><rect x="12" y="1" width="3" height="14" rx="1"/></svg></span>Home</a>
+    <a href="index.html#services" class="nav-overlay-link"><span class="nav-overlay-bullet" aria-hidden="true"><svg class="tick" viewBox="0 0 16 16"><rect x="1" y="9" width="3" height="6" rx="1"/><rect x="6.5" y="5" width="3" height="10" rx="1"/><rect x="12" y="1" width="3" height="14" rx="1"/></svg></span>Services</a>
+    <a href="work.html" class="nav-overlay-link"><span class="nav-overlay-bullet" aria-hidden="true"><svg class="tick" viewBox="0 0 16 16"><rect x="1" y="9" width="3" height="6" rx="1"/><rect x="6.5" y="5" width="3" height="10" rx="1"/><rect x="12" y="1" width="3" height="14" rx="1"/></svg></span>Work</a>
+    <a href="index.html#contact" class="nav-overlay-link"><span class="nav-overlay-bullet" aria-hidden="true"><svg class="tick" viewBox="0 0 16 16"><rect x="1" y="9" width="3" height="6" rx="1"/><rect x="6.5" y="5" width="3" height="10" rx="1"/><rect x="12" y="1" width="3" height="14" rx="1"/></svg></span>Contact</a>
   </nav>
   <div class="nav-overlay-foot">
     <a href="tel:+917020262435">+91 70202 62435</a>
@@ -55,18 +55,36 @@
   </section>
 
   <!-- ============ WORKFOLIO GRID ============
-       Layout-only pass: a 12-column bento grid of empty, numbered
-       placeholder cards. Each card is a plain, reusable container
-       (.wf-card) — no images, logos or copy yet. Real case content
-       (thumbnail, name, logo, link, category) drops into these same
-       slots later without touching the grid itself; the composition
-       is controlled centrally below, by card position. ============= -->
+       A 12-column bento grid; each slot's size comes from its position
+       (see style.css). Filled slots are .wf-card--case: campaign visual,
+       client logo badge, category + client name. Remaining slots are
+       still numbered placeholders — fill them in order. ============= -->
   <section class="workfolio-grid" aria-label="Workfolio grid">
-    <a class="wf-card" href="work/coming-soon.html"><span class="wf-card-index">01</span></a>
-    <a class="wf-card" href="work/coming-soon.html"><span class="wf-card-index">02</span></a>
-    <a class="wf-card" href="work/coming-soon.html"><span class="wf-card-index">03</span></a>
-    <a class="wf-card" href="work/coming-soon.html"><span class="wf-card-index">04</span></a>
-    <a class="wf-card" href="work/coming-soon.html"><span class="wf-card-index">05</span></a>
+    <a class="wf-card wf-card--case" href="work/himgauri-aher-adke.html">
+      <img class="wf-card-media" src="assets/latest/latest-7-mayor-portfolio.jpg" alt="" loading="lazy" style="--pos:50% 35%">
+      <span class="wf-card-logo wf-card-logo--round"><img src="assets/work/logos/himgauri-aher-adke.png" alt="" loading="lazy"></span>
+      <span class="wf-card-body"><span class="wf-card-tag">Public leadership</span><span class="wf-card-title">Himgauri Aher-Adke, Mayor of Nashik</span></span>
+    </a>
+    <a class="wf-card wf-card--case" href="work/nmc.html">
+      <img class="wf-card-media" src="assets/latest/latest-4-nmc-44-years.jpg" alt="" loading="lazy" style="--pos:50% 55%">
+      <span class="wf-card-logo wf-card-logo--round"><img src="assets/work/logos/nmc.png" alt="" loading="lazy"></span>
+      <span class="wf-card-body"><span class="wf-card-tag">Government &amp; Institutional</span><span class="wf-card-title">Nashik Municipal Corporation</span></span>
+    </a>
+    <a class="wf-card wf-card--case" href="work/jsu-group.html">
+      <img class="wf-card-media" src="assets/latest/latest-8-jsu-five-capabilities.jpg" alt="" loading="lazy" style="--pos:50% 10%">
+      <span class="wf-card-logo"><img src="assets/work/logos/jsu-group.png" alt="" loading="lazy"></span>
+      <span class="wf-card-body"><span class="wf-card-tag">Infrastructure &amp; Construction</span><span class="wf-card-title">Jay Shivray Udyog</span></span>
+    </a>
+    <a class="wf-card wf-card--case" href="work/veena-group.html">
+      <img class="wf-card-media" src="assets/latest/latest-2-veena-group-pmc.jpg" alt="" loading="lazy" style="--pos:50% 74%">
+      <span class="wf-card-logo"><img src="assets/work/logos/veena-group.png" alt="" loading="lazy"></span>
+      <span class="wf-card-body"><span class="wf-card-tag">Real estate &amp; Redevelopment</span><span class="wf-card-title">Veena Group</span></span>
+    </a>
+    <a class="wf-card wf-card--case" href="work/nhcdc.html">
+      <video class="wf-card-media" src="assets/showpiece/sammer-dalwai-raj-shamani.mp4" muted loop autoplay playsinline preload="metadata" aria-hidden="true" style="--pos:50% 45%"></video>
+      <span class="wf-card-logo"><img src="assets/work/logos/nhcdc.png" alt="" loading="lazy"></span>
+      <span class="wf-card-body"><span class="wf-card-tag">Healthcare &amp; Child development</span><span class="wf-card-title">New Horizons Child Development Centre</span></span>
+    </a>
     <a class="wf-card" href="work/coming-soon.html"><span class="wf-card-index">06</span></a>
     <a class="wf-card" href="work/coming-soon.html"><span class="wf-card-index">07</span></a>
     <a class="wf-card" href="work/coming-soon.html"><span class="wf-card-index">08</span></a>
@@ -82,7 +100,7 @@
   <footer class="contact" id="contact">
     <div class="contact-inner">
       <p class="tag tag--light">Propose a project or join us</p>
-      <h2 class="contact-headline">Got a brand<br>to build?</h2>
+      <h2 class="contact-headline">Let's make it<br>matter.</h2>
 
       <div class="contact-row">
         <div>

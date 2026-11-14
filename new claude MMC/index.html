@@ -54,10 +54,10 @@
 <div class="nav-overlay" id="quickNavOverlay" aria-hidden="true">
   <p class="nav-overlay-eyebrow">Menu</p>
   <nav class="nav-overlay-menu" aria-label="Main navigation">
-    <a href="#top" class="nav-overlay-link"><span class="nav-overlay-num">01</span>Home</a>
-    <a href="#services" class="nav-overlay-link"><span class="nav-overlay-num">02</span>Services</a>
-    <a href="work.html" class="nav-overlay-link"><span class="nav-overlay-num">03</span>Work</a>
-    <a href="#contact" class="nav-overlay-link"><span class="nav-overlay-num">04</span>Contact</a>
+    <a href="#top" class="nav-overlay-link"><span class="nav-overlay-bullet" aria-hidden="true"><svg class="tick" viewBox="0 0 16 16"><rect x="1" y="9" width="3" height="6" rx="1"/><rect x="6.5" y="5" width="3" height="10" rx="1"/><rect x="12" y="1" width="3" height="14" rx="1"/></svg></span>Home</a>
+    <a href="#services" class="nav-overlay-link"><span class="nav-overlay-bullet" aria-hidden="true"><svg class="tick" viewBox="0 0 16 16"><rect x="1" y="9" width="3" height="6" rx="1"/><rect x="6.5" y="5" width="3" height="10" rx="1"/><rect x="12" y="1" width="3" height="14" rx="1"/></svg></span>Services</a>
+    <a href="work.html" class="nav-overlay-link"><span class="nav-overlay-bullet" aria-hidden="true"><svg class="tick" viewBox="0 0 16 16"><rect x="1" y="9" width="3" height="6" rx="1"/><rect x="6.5" y="5" width="3" height="10" rx="1"/><rect x="12" y="1" width="3" height="14" rx="1"/></svg></span>Work</a>
+    <a href="#contact" class="nav-overlay-link"><span class="nav-overlay-bullet" aria-hidden="true"><svg class="tick" viewBox="0 0 16 16"><rect x="1" y="9" width="3" height="6" rx="1"/><rect x="6.5" y="5" width="3" height="10" rx="1"/><rect x="12" y="1" width="3" height="14" rx="1"/></svg></span>Contact</a>
   </nav>
   <div class="nav-overlay-foot">
     <a href="tel:+917020262435">+91 70202 62435</a>
@@ -191,28 +191,28 @@
       <div class="manifesto-scene">
         <div class="manifesto-stage" id="manifestoStage">
           <div class="manifesto-panel" data-panel>
-            <div class="manifesto-photo"><img src="assets/whatsapp.jpg" alt="MMC WhatsApp CPaaS campaign creative" loading="lazy"></div>
+            <div class="manifesto-photo"><img src="assets/manifesto/orbit-1-whatsapp-cpaas.jpg" width="900" height="1121" alt="A phone broadcasting one WhatsApp message to many customers" loading="lazy"></div>
             <div class="manifesto-panel-copy">
               <span class="manifesto-tag">WhatsApp &amp; CPaaS</span>
               <p class="manifesto-caption">We run the panel.</p>
             </div>
           </div>
           <div class="manifesto-panel" data-panel>
-            <div class="manifesto-photo placeholder-box"><span class="placeholder-label">Outdoor</span></div>
+            <div class="manifesto-photo"><img src="assets/manifesto/orbit-2-outdoor-atl.jpg" width="900" height="1121" alt="An outdoor billboard beside the same artwork on a phone screen" loading="lazy"></div>
             <div class="manifesto-panel-copy">
               <span class="manifesto-tag">ATL — Print &amp; Outdoor</span>
               <p class="manifesto-caption">We book the outdoor.</p>
             </div>
           </div>
           <div class="manifesto-panel" data-panel>
-            <div class="manifesto-photo"><video src="assets/reel-promo.mp4" autoplay muted loop playsinline aria-label="MMC reel-style promo video"></video></div>
+            <div class="manifesto-photo"><img src="assets/manifesto/orbit-3-content-reels.jpg" width="900" height="1121" alt="A phone on a tripod beside a ring light, set up to shoot a reel" loading="lazy"></div>
             <div class="manifesto-panel-copy">
               <span class="manifesto-tag">Content &amp; Reels</span>
               <p class="manifesto-caption">We shoot the reel.</p>
             </div>
           </div>
           <div class="manifesto-panel" data-panel>
-            <div class="manifesto-photo"><img src="assets/goa1.jpg" alt="MMC Goa Assembly Elections campaign creative" loading="lazy"></div>
+            <div class="manifesto-photo"><img src="assets/manifesto/orbit-4-elections.jpg" width="900" height="1121" alt="A strategist studying a rising chart over a constituency map" loading="lazy"></div>
             <div class="manifesto-panel-copy">
               <span class="manifesto-tag">Elections</span>
               <p class="manifesto-caption">We manage the vote.</p>
@@ -233,27 +233,40 @@
       </div>
 
       <div class="filmstrip">
+        <!-- Every card is the shared 4:5 .media-card (style.css). Photos fill it;
+             9:16 reels sit whole inside it over a pre-blurred still of the same
+             reel (.media-card-backdrop, a <1 KB image — no second video).
+             Reel videos load only when the section nears the viewport (data-src,
+             see main.js) and play only while on screen; tap the speaker to hear one. -->
         <div class="filmstrip-track" id="filmstripTrack">
-          <div class="filmstrip-tile">
-            <img src="assets/whatsapp.jpg" alt="MMC WhatsApp CPaaS broadcast creative" loading="lazy">
+          <div class="filmstrip-tile media-card media-card--reel">
+            <img class="media-card-backdrop" src="assets/showpiece/backdrops/veena-group.jpg" alt="" aria-hidden="true" loading="lazy" decoding="async">
+            <video class="media-card-media" data-src="assets/showpiece/veena-group.mp4" muted loop playsinline preload="none" aria-label="Veena Group reel by MakeMyCampaign"></video>
+            <button class="filmstrip-sound" type="button" aria-label="Unmute video" aria-pressed="false"><svg class="icon-muted" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3z"/><path d="M16.5 8.5l5 7M21.5 8.5l-5 7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg><svg class="icon-unmuted" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3z"/><path d="M15.5 9a4 4 0 0 1 0 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/><path d="M18 6.5a8 8 0 0 1 0 11" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg></button>
           </div>
-          <div class="filmstrip-tile">
-            <img src="assets/goa1.jpg" alt="MMC Goa Assembly Elections campaign creative" loading="lazy">
+          <div class="filmstrip-tile media-card media-card--reel">
+            <img class="media-card-backdrop" src="assets/showpiece/backdrops/sammer-dalwai-raj-shamani.jpg" alt="" aria-hidden="true" loading="lazy" decoding="async">
+            <video class="media-card-media" data-src="assets/showpiece/sammer-dalwai-raj-shamani.mp4" muted loop playsinline preload="none" aria-label="Reel with Sammer Dalwai and Raj Shamani"></video>
+            <button class="filmstrip-sound" type="button" aria-label="Unmute video" aria-pressed="false"><svg class="icon-muted" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3z"/><path d="M16.5 8.5l5 7M21.5 8.5l-5 7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg><svg class="icon-unmuted" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3z"/><path d="M15.5 9a4 4 0 0 1 0 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/><path d="M18 6.5a8 8 0 0 1 0 11" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg></button>
           </div>
-          <div class="filmstrip-tile placeholder-box">
-            <span class="placeholder-label">TV &amp; Print</span>
+          <div class="filmstrip-tile media-card media-card--reel">
+            <img class="media-card-backdrop" src="assets/showpiece/backdrops/nmc-kumbh.jpg" alt="" aria-hidden="true" loading="lazy" decoding="async">
+            <video class="media-card-media" data-src="assets/showpiece/nmc-kumbh.mp4" muted loop playsinline preload="none" aria-label="Nashik Municipal Corporation Kumbh reel"></video>
+            <button class="filmstrip-sound" type="button" aria-label="Unmute video" aria-pressed="false"><svg class="icon-muted" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3z"/><path d="M16.5 8.5l5 7M21.5 8.5l-5 7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg><svg class="icon-unmuted" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3z"/><path d="M15.5 9a4 4 0 0 1 0 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/><path d="M18 6.5a8 8 0 0 1 0 11" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg></button>
           </div>
-          <div class="filmstrip-tile">
-            <img src="assets/goa2.jpg" alt="MMC Goa Elections campaign creative" loading="lazy">
+          <div class="filmstrip-tile media-card media-card--photo">
+            <img class="media-card-media" src="assets/showpiece/mayor-pudhari.jpg" width="750" height="1000" alt="Creative for the Mayor of Nashik featuring Pudhari newspaper coverage" loading="lazy">
           </div>
-          <div class="filmstrip-tile placeholder-box">
-            <span class="placeholder-label">Outdoor</span>
+          <div class="filmstrip-tile media-card media-card--photo">
+            <img class="media-card-media" src="assets/showpiece/mmc-taza-khabar.jpg" width="750" height="1000" alt="MMC 'Taza Khabar' newspaper-style brand creative" loading="lazy">
           </div>
-          <div class="filmstrip-tile placeholder-box">
-            <span class="placeholder-label">Live Events</span>
+          <div class="filmstrip-tile media-card media-card--reel">
+            <img class="media-card-backdrop" src="assets/showpiece/backdrops/tmkoc-mmc.jpg" alt="" aria-hidden="true" loading="lazy" decoding="async">
+            <video class="media-card-media" data-src="assets/showpiece/tmkoc-mmc.mp4" muted loop playsinline preload="none" aria-label="Taarak Mehta Ka Ooltah Chashmah reel by MakeMyCampaign"></video>
+            <button class="filmstrip-sound" type="button" aria-label="Unmute video" aria-pressed="false"><svg class="icon-muted" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3z"/><path d="M16.5 8.5l5 7M21.5 8.5l-5 7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg><svg class="icon-unmuted" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3z"/><path d="M15.5 9a4 4 0 0 1 0 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/><path d="M18 6.5a8 8 0 0 1 0 11" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg></button>
           </div>
-          <div class="filmstrip-tile placeholder-box">
-            <span class="placeholder-label">Content &amp; Reels</span>
+          <div class="filmstrip-tile media-card media-card--photo media-card--focus-top">
+            <img class="media-card-media" src="assets/showpiece/mmc-smart-marketing.jpg" width="750" height="1000" alt="MMC 'Blind Marketing vs Smart Marketing' crow creative" loading="lazy">
           </div>
         </div>
       </div>
@@ -562,10 +575,10 @@
       <a href="work.html" class="btn btn--text magnetic">View more <span>→</span></a>
     </div>
     <div class="latest-grid">
-      <div class="latest-tile latest-tile--side has-image"><img src="assets/whatsapp.jpg" alt="MMC WhatsApp CPaaS campaign creative" loading="lazy"></div>
-      <div class="latest-tile latest-tile--side placeholder-box"><span class="placeholder-label">Creative placeholder</span></div>
-      <div class="latest-tile latest-tile--side placeholder-box"><span class="placeholder-label">Creative placeholder</span></div>
-      <div class="latest-tile latest-tile--side placeholder-box"><span class="placeholder-label">Creative placeholder</span></div>
+      <div class="latest-tile latest-tile--side has-image"><img src="assets/latest/latest-1-mmc-creative-gang.jpg" width="800" height="1067" alt="The Creative Gang — the MakeMyCampaign team" loading="lazy"></div>
+      <div class="latest-tile latest-tile--side has-image"><img src="assets/latest/latest-2-veena-group-pmc.jpg" width="800" height="1067" alt="Veena Group creative: why a society needs an independent PMC" loading="lazy"></div>
+      <div class="latest-tile latest-tile--side has-image"><img src="assets/latest/latest-3-navshakti.jpg" width="800" height="968" alt="Navshakti Navratri special teaser by Exploring Temples and MakeMyCampaign" loading="lazy"></div>
+      <div class="latest-tile latest-tile--side has-image"><img src="assets/latest/latest-4-nmc-44-years.jpg" width="800" height="1067" alt="Nashik Municipal Corporation 44th foundation day creative" loading="lazy"></div>
       <div class="latest-tile has-video" id="latestVideoTile">
         <video class="video-backdrop" src="assets/MMC_ADD.mp4" muted loop autoplay playsinline aria-hidden="true"></video>
         <!-- Media slot: a fixed-aspect box (--media-ratio = the clip's shape)
@@ -583,10 +596,10 @@
           </button>
         </div>
       </div>
-      <div class="latest-tile latest-tile--side placeholder-box"><span class="placeholder-label">Creative placeholder</span></div>
-      <div class="latest-tile latest-tile--side placeholder-box"><span class="placeholder-label">Creative placeholder</span></div>
-      <div class="latest-tile latest-tile--side placeholder-box"><span class="placeholder-label">Creative placeholder</span></div>
-      <div class="latest-tile latest-tile--side placeholder-box"><span class="placeholder-label">Creative placeholder</span></div>
+      <div class="latest-tile latest-tile--side has-image"><img src="assets/latest/latest-6-goda-aarti-record.jpg" width="800" height="1000" alt="Nashik world record Goda Aarti with 6,233 Goda Sevaks" loading="lazy"></div>
+      <div class="latest-tile latest-tile--side has-image"><img src="assets/latest/latest-7-mayor-portfolio.jpg" width="800" height="1041" alt="Portfolio creative for the Mayor of Nashik" loading="lazy"></div>
+      <div class="latest-tile latest-tile--side has-image"><img src="assets/latest/latest-8-jsu-five-capabilities.jpg" width="800" height="1067" alt="Jay Shivray Udyog — One group, five capabilities creative" loading="lazy"></div>
+      <div class="latest-tile latest-tile--side has-image"><img src="assets/whatsapp.jpg" alt="MMC WhatsApp CPaaS campaign creative" loading="lazy"></div>
     </div>
   </section>
 
@@ -612,7 +625,7 @@
 
       <div class="contact-hero-row">
         <div class="contact-hero">
-          <h2 class="contact-headline">Let's make it<br><span class="word--accent">matter.</span></h2>
+          <h2 class="contact-headline">Got a brand<br><span class="word--accent">to build&nbsp;?</span></h2>
           <button type="button" class="btn btn--solid magnetic js-open-contact contact-cta"><span>Start a project <span class="contact-cta-arrow">→</span></span></button>
         </div>
         <nav class="contact-nav" aria-label="Footer">
