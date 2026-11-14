@@ -110,7 +110,7 @@
             </div>
           </div>
           <div class="manifesto-panel" data-panel>
-            <div class="manifesto-photo placeholder-box"><span class="placeholder-label">Reels</span></div>
+            <div class="manifesto-photo"><video src="assets/reel-promo.mp4" autoplay muted loop playsinline aria-label="MMC reel-style promo video"></video></div>
             <div class="manifesto-panel-copy">
               <span class="manifesto-tag">Content &amp; Reels</span>
               <p class="manifesto-caption">We shoot the reel.</p>
@@ -497,25 +497,45 @@
 
   <!-- ============ CONTACT / FOOTER ============ -->
   <footer class="contact" id="contact">
+    <!-- top sphere echoes the logo: blue "megaphone" with orange signal waves
+         (the svg is 3× the sphere and centred on it; viewBox units: sphere
+         radius = 100, arcs at r 112/126/140 spanning 134°→184°) -->
+    <div class="contact-blob contact-blob--a" aria-hidden="true">
+      <svg class="contact-waves" viewBox="-300 -300 600 600" focusable="false">
+        <path class="contact-wave" d="M-77.80 80.57A112 112 0 0 1-111.73-7.81"/>
+        <path class="contact-wave" d="M-87.53 90.64A126 126 0 0 1-125.69-8.79"/>
+        <path class="contact-wave" d="M-97.25 100.71A140 140 0 0 1-139.66-9.77"/>
+      </svg>
+    </div>
+    <div class="contact-blob contact-blob--b" aria-hidden="true"></div>
     <div class="contact-inner">
-      <p class="tag tag--light">Propose a project or join us</p>
-      <h2 class="contact-headline">Got a brand<br>to build?</h2>
+
+      <a href="#top" class="contact-mark" aria-label="MakeMyCampaign — back to top">
+        <img class="contact-mark-logo" src="assets/logo/mark-320.png" width="486" height="320" alt="" loading="lazy">
+        <span class="contact-mark-word" aria-hidden="true">MakeMy<span class="contact-mark-accent">Campaign</span></span>
+      </a>
+
+      <div class="contact-hero-row">
+        <div class="contact-hero">
+          <h2 class="contact-headline">Let's make it<br><span class="word--accent">matter.</span></h2>
+          <button type="button" class="btn btn--solid magnetic js-open-contact contact-cta"><span>Start a project <span class="contact-cta-arrow">→</span></span></button>
+        </div>
+        <nav class="contact-nav" aria-label="Footer">
+          <a href="#top">Home</a>
+          <a href="#services">Services</a>
+          <a href="work.html">Work</a>
+          <a href="#contact">Contact</a>
+        </nav>
+      </div>
 
       <div class="contact-row">
         <div>
           <div class="contact-phones">
-            <a href="tel:+918888533422" class="contact-phone">+91 88885 33422</a>
-            <a href="tel:+917020262435" class="contact-phone">+91 70202 62435</a>
+            <a href="tel:+918888533422" class="contact-phone magnetic"><span class="contact-phone-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6.6 10.8a15.2 15.2 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1l-2.3 2.2z"/></svg></span><span class="contact-phone-num">+91 88885 33422</span></a>
+            <a href="tel:+917020262435" class="contact-phone magnetic"><span class="contact-phone-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6.6 10.8a15.2 15.2 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1l-2.3 2.2z"/></svg></span><span class="contact-phone-num">+91 70202 62435</span></a>
           </div>
           <div class="contact-branches">Nashik, Thane &amp; Goa</div>
         </div>
-        <div class="contact-cta-row">
-          <button type="button" class="btn btn--solid magnetic js-open-contact"><span>Start Your Campaign</span></button>
-          <a href="https://www.instagram.com/makemycampaignn" target="_blank" rel="noopener" class="btn btn--outline-light magnetic"><span>Follow on Instagram</span></a>
-        </div>
-      </div>
-
-      <div class="contact-bottom">
         <div class="social-row" aria-label="Social links">
           <a href="https://wa.me/918888533422" target="_blank" rel="noopener" aria-label="WhatsApp" class="social-icon">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.5 14.4c-.3-.1-1.6-.8-1.9-.9-.3-.1-.4-.1-.6.1-.2.3-.7.9-.8 1-.2.2-.3.2-.5.1-.3-.1-1.2-.4-2.2-1.4-.8-.7-1.4-1.6-1.5-1.9-.2-.3 0-.5.1-.6l.4-.5c.1-.1.2-.3.2-.4.1-.1 0-.3 0-.4-.1-.1-.6-1.4-.8-1.9-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.4.1-.6.3-.2.3-.8.8-.8 1.9s.8 2.2.9 2.4c.1.2 1.6 2.5 4 3.5.6.2 1 .4 1.3.5.6.2 1.1.1 1.5.1.5-.1 1.6-.6 1.8-1.3.2-.6.2-1.1.1-1.3-.1-.1-.2-.2-.5-.3z"/><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.1-1.3A10 10 0 1 0 12 2z" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
@@ -530,12 +550,6 @@
             <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="2.5" y="5" width="19" height="14" rx="3" stroke="currentColor" stroke-width="1.6"/><path d="M3.5 6.5 12 13l8.5-6.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </a>
         </div>
-        <nav class="footer-nav" aria-label="Footer">
-          <a href="#top">Home</a>
-          <a href="#services">Services</a>
-          <a href="work.html">Work</a>
-          <a href="#contact">Contact</a>
-        </nav>
       </div>
 
       <div class="contact-legal">

@@ -246,7 +246,7 @@ button{ font:inherit; background:none; border:none; cursor:pointer; color:inheri
   backface-visibility:hidden; box-shadow:0 50px 90px -30px rgba(0,0,0,.6);
 }
 .manifesto-photo{ position:absolute; inset:0; }
-.manifesto-photo img{ width:100%; height:100%; object-fit:cover; display:block; }
+.manifesto-photo img, .manifesto-photo video{ width:100%; height:100%; object-fit:cover; display:block; }
 .manifesto-photo.placeholder-box{
   position:absolute; inset:0; border-radius:0; border:none;
   background:repeating-linear-gradient(135deg, var(--ink-2), var(--ink-2) 10px, var(--ink-3) 10px, var(--ink-3) 20px);
@@ -612,28 +612,101 @@ button{ font:inherit; background:none; border:none; cursor:pointer; color:inheri
    ============================================================= */
 /* z-index keeps the footer above the zoomed video tile, which overhangs its
    section once the pin releases */
-.contact{ position:relative; z-index:3; background:var(--ink); color:var(--paper); padding:100px var(--gutter) 40px; }
-.contact-inner{ max-width:var(--container); margin:0 auto; }
-.contact-headline{ font-size:clamp(52px,11vw,160px); line-height:.92; margin:16px 0 36px; }
-.contact-row{ display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:28px; padding-bottom:44px; border-bottom:1px solid var(--line-dark); }
-.contact-phones{ display:flex; flex-direction:column; gap:6px; }
-.contact-branches{ display:flex; gap:28px; flex-wrap:wrap; font-family:var(--font-mono); font-size:13px; letter-spacing:.04em; text-transform:uppercase; color:var(--paper-dim); margin-top:14px; }
-.contact-branches span{ color:var(--acid); margin-right:6px; }
-.contact-phone{ font-family:var(--font-mono); font-size:clamp(18px,2.4vw,26px); letter-spacing:.02em; }
-.contact-cta-row{ display:flex; gap:16px; flex-wrap:wrap; }
-.contact-bottom{ display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:24px; padding:32px 0; }
-.social-row{ display:flex; gap:14px; }
+.contact{ position:relative; z-index:3; overflow:hidden; background:var(--paper); color:var(--ink); padding:90px var(--gutter) 40px;
+  --mmc-blue:#3F78B5; --mmc-orange:#DB6234; /* sampled from the logo artwork */ }
+.contact-inner{ position:relative; z-index:1; max-width:var(--container); margin:0 auto; }
+
+/* Decorative spheres, purely ambient — sit behind all content.
+   Two independent motions stack on each one: GSAP scrubs --drift
+   (scroll drift → `transform`, main.js) while the separate, transitioned
+   `translate` property follows the mouse via --mx/--my (-1…1, set on
+   .contact by main.js). */
+.contact-blob{ position:absolute; z-index:0; border-radius:50%; pointer-events:none; transform:translateY(var(--drift,0px)); background:radial-gradient(circle at 32% 28%, var(--signal) 0%, var(--signal-dim) 65%, var(--signal-dim) 100%); }
+.contact-blob--a{ width:440px; height:440px; top:-200px; right:-140px;
+  translate:calc(var(--mx,0) * -16px) calc(var(--my,0) * -12px); transition:translate 1.2s var(--ease); }
+/* bottom sphere: warm, light orange counterweight to the blue one, kept
+   left of the legal links */
+.contact-blob--b{ width:560px; height:560px; bottom:-380px; left:calc(50% - 330px); opacity:.24;
+  background:radial-gradient(circle at 50% 22%, #F7A27F 0%, var(--acid) 70%);
+  translate:calc(var(--mx,0) * 22px) calc(var(--my,0) * 14px); transition:translate 1.4s var(--ease); }
+
+/* orange signal waves around the top sphere — "broadcast" pulse, inner → outer */
+.contact-waves{ position:absolute; left:-100%; top:-100%; width:300%; height:300%; max-width:none; overflow:visible; }
+.contact-wave{ fill:none; stroke:var(--mmc-orange); stroke-width:4px; stroke-linecap:round; vector-effect:non-scaling-stroke; opacity:.22; animation:contact-wave 3s ease-in-out infinite; }
+.contact-wave:nth-child(2){ animation-delay:.28s; }
+.contact-wave:nth-child(3){ animation-delay:.56s; }
+@keyframes contact-wave{
+  0%,60%,100%{ opacity:.22; transform:translate(0,0); }
+  25%{ opacity:1; transform:translate(-4px,2.3px); } /* svg units: ~9px on desktop */
+}
+@media (prefers-reduced-motion: reduce){
+  .contact-wave{ animation:none; opacity:.75; }
+  .contact-blob--a, .contact-blob--b{ translate:none; transition:none; }
+}
+
+/* Footer brand lockup — logo mark + wordmark set in the logo's own rounded
+   face (Baloo 2, same as the preloader) and the logo's two colours:
+   "MakeMy" in the mark's blue, "Campaign" in the bold orange. */
+.contact-mark{ display:inline-flex; align-items:center; gap:14px; margin:0 0 40px; }
+.contact-mark-logo{ height:58px; width:auto; transition:transform .5s var(--ease); }
+.contact-mark:hover .contact-mark-logo{ transform:rotate(-6deg) scale(1.05); }
+.contact-mark-word{ font-family:var(--font-brand); font-weight:600; font-size:clamp(26px,2.7vw,34px); line-height:1; letter-spacing:-.005em; text-transform:none; color:var(--mmc-blue); padding-top:.12em; }
+.contact-mark-accent{ font-weight:800; color:var(--mmc-orange); }
+
+.contact-hero-row{ display:flex; justify-content:space-between; align-items:flex-end; gap:40px; flex-wrap:wrap; padding-bottom:48px; border-bottom:1px solid var(--line-light); }
+.contact-hero{ max-width:640px; }
+.contact-headline{ font-size:clamp(42px,6.8vw,92px); line-height:.98; margin:0 0 32px; }
+.contact-cta{ gap:10px; }
+.contact-cta-arrow{ display:inline-block; transition:transform .22s var(--ease); }
+.contact-cta:hover .contact-cta-arrow{ transform:translateX(4px); }
+.contact-nav{ display:flex; flex-direction:column; gap:20px; padding-left:44px; margin-right:clamp(0px,5vw,80px); border-left:1px solid var(--line-light); font-family:var(--font-mono); font-size:clamp(15px,1.3vw,18px); font-weight:500; letter-spacing:.06em; text-transform:uppercase; }
+.contact-nav a{ opacity:.7; transition:opacity .2s; }
+.contact-nav a:hover{ opacity:1; }
+
+.contact-row{ display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:28px; padding:40px 0; border-bottom:1px solid var(--line-light); }
+.contact-phones{ display:flex; flex-direction:column; align-items:flex-start; gap:12px; }
+.contact-branches{ display:flex; gap:28px; flex-wrap:wrap; font-family:var(--font-mono); font-size:13px; letter-spacing:.04em; text-transform:uppercase; color:var(--ink); opacity:.6; margin-top:14px; }
+.contact-branches span{ color:var(--acid); margin-right:6px; opacity:1; }
+/* phone numbers: magnetic pull (same .magnetic JS as the CTA) + a ringing
+   handset badge with a soft pulse; the two numbers ring out of step */
+.contact-phone{ display:inline-flex; align-items:center; gap:.55em; font-family:var(--font-mono); font-size:clamp(18px,2.4vw,26px); letter-spacing:.02em; color:var(--ink); transition:transform .3s var(--ease), color .2s; }
+.contact-phone:hover{ color:var(--signal-dim); }
+.contact-phone-icon{ position:relative; flex:none; width:1.55em; height:1.55em; border-radius:50%; background:var(--signal); color:var(--paper); display:flex; align-items:center; justify-content:center; transition:background .25s; }
+.contact-phone-icon svg{ width:50%; height:50%; fill:currentColor; animation:phone-ring 3s ease-in-out infinite; }
+.contact-phone-icon::after{ content:''; position:absolute; inset:0; border-radius:50%; border:2px solid var(--signal); opacity:0; animation:phone-pulse 3s ease-out infinite; }
+.contact-phone:nth-child(2) .contact-phone-icon svg,
+.contact-phone:nth-child(2) .contact-phone-icon::after{ animation-delay:1.5s; }
+.contact-phone:hover .contact-phone-icon{ background:var(--acid); }
+.contact-phone:hover .contact-phone-icon svg{ animation:phone-ring-fast .7s ease-in-out infinite; }
+.contact-phone:hover .contact-phone-icon::after{ border-color:var(--acid); animation:phone-pulse 1.2s ease-out infinite; }
+@keyframes phone-ring{
+  0%,32%,100%{ transform:rotate(0); }
+  4%{ transform:rotate(-18deg); }  8%{ transform:rotate(16deg); }
+  12%{ transform:rotate(-14deg); } 16%{ transform:rotate(12deg); }
+  20%{ transform:rotate(-8deg); }  24%{ transform:rotate(5deg); }
+}
+@keyframes phone-ring-fast{
+  0%,100%{ transform:rotate(0); }
+  20%{ transform:rotate(-18deg); } 40%{ transform:rotate(16deg); }
+  60%{ transform:rotate(-12deg); } 80%{ transform:rotate(8deg); }
+}
+@keyframes phone-pulse{
+  0%{ transform:scale(1); opacity:.55; }
+  60%,100%{ transform:scale(1.75); opacity:0; }
+}
+@media (prefers-reduced-motion: reduce){
+  .contact-phone-icon svg, .contact-phone-icon::after,
+  .contact-phone:hover .contact-phone-icon svg, .contact-phone:hover .contact-phone-icon::after{ animation:none; }
+}
+.social-row{ display:flex; gap:16px; }
 .social-icon{
-  width:42px; height:42px; border-radius:50%; border:1px solid var(--line-dark);
-  display:flex; align-items:center; justify-content:center; opacity:.8;
+  width:56px; height:56px; border-radius:50%; border:1px solid var(--line-light);
+  display:flex; align-items:center; justify-content:center; opacity:.75; color:var(--ink);
   transition:opacity .2s, border-color .2s, background .2s, transform .2s;
 }
-.social-icon svg{ width:19px; height:19px; }
-.social-icon:hover{ opacity:1; border-color:var(--acid); background:rgba(240,90,42,.1); transform:translateY(-2px); }
-.footer-nav{ display:flex; gap:24px; font-family:var(--font-mono); font-size:13px; flex-wrap:wrap; }
-.footer-nav a{ opacity:.7; }
-.footer-nav a:hover{ opacity:1; }
-.contact-legal{ display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; padding-top:24px; border-top:1px solid var(--line-dark); font-family:var(--font-mono); font-size:11px; opacity:.55; }
+.social-icon svg{ width:26px; height:26px; }
+.social-icon:hover{ opacity:1; border-color:var(--acid); background:rgba(240,90,42,.08); transform:translateY(-2px); }
+.contact-legal{ display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; padding-top:24px; font-family:var(--font-mono); font-size:11px; color:var(--ink); opacity:.55; }
 .legal-links{ display:flex; gap:20px; }
 
 /* =============================================================
@@ -762,6 +835,10 @@ html.nav-open{ overflow:hidden; }
 /* =============================================================
    Responsive
    ============================================================= */
+@media (max-width:1100px){
+  /* keep the orange footer sphere clear of the branches/copyright text */
+  .contact-blob--b{ width:440px; height:440px; bottom:-300px; left:calc(50% - 200px); }
+}
 @media (max-width:900px){
   .service-row{ grid-template-columns:40px 1fr 26px; }
   .service-desc{ display:none; }
@@ -778,10 +855,27 @@ html.nav-open{ overflow:hidden; }
   .latest{ padding:0 0 72px; }
   .contact{ padding:72px var(--gutter) 32px; }
   .section-head{ margin-bottom:28px; }
+  .contact-nav{ padding-left:28px; gap:14px; }
+  .contact-blob--a{ width:300px; height:300px; top:-140px; right:-120px; }
+  .contact-blob--b{ width:380px; height:380px; bottom:-260px; left:auto; right:-40px; }
+}
+@media (max-width:680px){
+  .contact-hero-row{ flex-direction:column; align-items:flex-start; gap:30px; }
+  .contact-nav{ flex-direction:row; flex-wrap:wrap; gap:16px 24px; padding-left:0; margin-right:0; border-left:none; padding-top:22px; border-top:1px solid var(--line-light); width:100%; }
+  .contact-mark-logo{ height:46px; }
 }
 @media (max-width:560px){
   .contact-row{ flex-direction:column; align-items:flex-start; }
   .contact-branches{ gap:16px; }
+  .contact-mark{ gap:10px; }
+  .contact-mark-logo{ height:40px; }
+  .contact-mark-word{ font-size:23px; }
+  .contact-blob--a{ width:220px; height:220px; top:-112px; right:-92px; }
+  .contact-wave{ stroke-width:3px; }
+  .contact-waves{ transform:rotate(24deg); } /* swing the arcs up, clear of the wordmark */
+  .social-row{ gap:12px; }
+  .social-icon{ width:50px; height:50px; }
+  .social-icon svg{ width:23px; height:23px; }
 }
 
 /* =============================================================

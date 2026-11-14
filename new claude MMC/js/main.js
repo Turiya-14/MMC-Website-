@@ -111,6 +111,18 @@
      Hero intro (headline lines rise in)
      --------------------------------------------------------- */
   function playHeroIntro(){
+    var showcase = document.querySelector('.showcase');
+    if (showcase) {
+      if (!hasGSAP || prefersReduced) return;
+      gsap.from(showcase.querySelectorAll('.showcase-mask > span'), {yPercent:110,duration:.7,stagger:.09,ease:'power3.out'});
+      gsap.from(showcase.querySelectorAll('.showcase-image'), {y:35,scale:.96,opacity:0,duration:.9,stagger:.12,ease:'power3.out'});
+      gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', function(){
+        gsap.to(showcase.querySelector('.showcase-art'), {scale:1.08,y:-24,ease:'none',scrollTrigger:{trigger:showcase,start:'top top',end:'bottom top',scrub:true}});
+        gsap.to(showcase.querySelector('.showcase-copy'), {y:-45,ease:'none',scrollTrigger:{trigger:showcase,start:'top top',end:'bottom top',scrub:true}});
+      });
+      return;
+    }
+
     if (!hasGSAP){
       document.querySelectorAll('.hero-headline .word').forEach(function(w){ w.style.transform = 'translateY(0)'; });
       return;
@@ -221,6 +233,20 @@
       });
       el.addEventListener('mouseleave', function(){ el.style.transform = ''; });
     });
+
+    /* Footer spheres lean gently with the mouse (CSS reads --mx/--my) */
+    var contactEl = document.getElementById('contact');
+    if (contactEl && !prefersReduced){
+      contactEl.addEventListener('mousemove', function(e){
+        var r = contactEl.getBoundingClientRect();
+        contactEl.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 2 - 1).toFixed(3));
+        contactEl.style.setProperty('--my', ((e.clientY - r.top) / r.height * 2 - 1).toFixed(3));
+      });
+      contactEl.addEventListener('mouseleave', function(){
+        contactEl.style.setProperty('--mx', '0');
+        contactEl.style.setProperty('--my', '0');
+      });
+    }
   }
 
   /* ---------------------------------------------------------
@@ -408,6 +434,15 @@
       opacity:1, y:0, duration:1, ease:'power3.out',
       scrollTrigger:{ trigger:'.contact', start:'top 70%' }
     });
+
+    /* Footer spheres drift into place as the footer scrolls in: the blue
+       one settles down from above, the orange one rises from below.
+       Tweens the --drift variable (read by the spheres' CSS transform)
+       rather than `y`, because a GSAP transform tween writes an inline
+       `translate:none` that would kill the CSS mouse-follow. */
+    var footerDrift = { trigger:'.contact', start:'top bottom', end:'bottom bottom', scrub:0.6 };
+    gsap.fromTo('.contact-blob--a', { '--drift':'-90px' }, { '--drift':'0px', ease:'none', scrollTrigger:footerDrift });
+    gsap.fromTo('.contact-blob--b', { '--drift':'140px' }, { '--drift':'0px', ease:'none', scrollTrigger:Object.assign({}, footerDrift) });
 
   } else {
     // no-JS-animation fallback: manifesto's static stacked layout is handled
