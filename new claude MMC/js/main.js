@@ -310,21 +310,36 @@
     var manifestoFinal = document.getElementById('manifestoFinal');
     var manifestoScene = document.querySelector('.manifesto-scene');
 
-    if (manifestoStage && manifestoPanels.length && window.innerWidth > 680){
+    /* Set up only while the desktop layout applies (the ≤680px CSS shows a
+       static stack instead). gsap.matchMedia builds the orbit when the
+       viewport enters this range and tears it down — tweens, ScrollTrigger
+       and every inline style it wrote — when it leaves, so resizing across
+       the breakpoint can never leave a half-rotated ring behind. */
+    if (manifestoStage && manifestoPanels.length) gsap.matchMedia().add('(min-width: 681px)', function(){
       var panelCount = manifestoPanels.length;
       var angleStep = 360 / panelCount;
       var ringRadius = 0;
+      var currentAngle = 0;
 
+      /* Ring radius comes from the stage's LAYOUT width (offsetWidth ignores
+         transforms) — never from a panel's on-screen box. Mid-spin a panel is
+         rotated, scaled and perspective-projected, so measuring it then
+         (which any ScrollTrigger refresh did: a lazy image loading, a resize)
+         returned a tiny width, collapsed the ring and made the panels slice
+         through each other. 2.35x the inscribed radius keeps the spacing the
+         design was tuned to (~1.17x the panel width for 4 panels); the floor
+         is the hard no-overlap minimum for the largest panel scale (1.08)
+         with 30% headroom, so no measurement can ever bring them together. */
       function layoutRing(){
-        var rect = manifestoPanels[0].getBoundingClientRect();
-        // 1.85x the tight inscribed-circle radius — the bare formula below
-        // packs panels edge-to-edge (fine for a solid box, but with 3D
-        // perspective the off-angle faces visually bleed into each other
-        // mid-transition). The multiplier opens up real air between panels,
-        // "like Jio" (point 19 feedback).
-        ringRadius = Math.round(((rect.width / 2) / Math.tan(Math.PI / panelCount)) * 1.85);
+        var w = manifestoStage.offsetWidth || 380;
+        var t = Math.tan(Math.PI / Math.max(panelCount, 3));
+        var designed = (w / 2) / t * 2.35;
+        var noOverlap = (w / 2) * 1.08 / t * 1.3;
+        ringRadius = Math.round(Math.max(designed, noOverlap, w * 0.9));
+        paintPanels(currentAngle);
       }
       function paintPanels(stageAngle){
+        currentAngle = stageAngle;
         // Spin the whole ring: the stage's own rotateY composes (via
         // transform-style:preserve-3d) with each panel's fixed base
         // rotateY+translateZ, which is what actually sweeps panels past
@@ -348,7 +363,16 @@
       }
 
       layoutRing();
-      paintPanels(0);
+
+      // keep the radius in step with the stage's real size (rAF-batched)
+      var ringRO = null, ringRaf = 0;
+      if (typeof ResizeObserver !== 'undefined'){
+        ringRO = new ResizeObserver(function(){
+          cancelAnimationFrame(ringRaf);
+          ringRaf = requestAnimationFrame(layoutRing);
+        });
+        ringRO.observe(manifestoStage);
+      }
 
       var per = 1 / (panelCount + 1);
       var proxy = { angle: 0 };
@@ -377,7 +401,21 @@
         }, 0)
         .to(manifestoScene, { opacity: 0, duration: per * 0.6, ease: 'power2.in' }, panelCount * per + per * 0.1)
         .fromTo(manifestoFinal, { opacity: 0 }, { opacity: 1, duration: per * 0.6, ease: 'power2.out' }, panelCount * per + per * 0.25);
-    }
+
+      // leaving the desktop range: matchMedia reverts the GSAP tweens and
+      // ScrollTrigger; clear the styles paintPanels wrote by hand
+      return function(){
+        if (ringRO) ringRO.disconnect();
+        cancelAnimationFrame(ringRaf);
+        manifestoStage.style.transform = '';
+        manifestoPanels.forEach(function(panel){
+          panel.style.transform = '';
+          panel.style.opacity = '';
+          panel.style.filter = '';
+          panel.style.zIndex = '';
+        });
+      };
+    });
 
     /* Showpiece: pinned horizontal filmstrip — ONE shared scroll-linked
        transform on the track (not six independently-animated badges), so
