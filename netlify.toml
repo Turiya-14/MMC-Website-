@@ -1,0 +1,7 @@
+# Netlify config for the MMC website.
+# The site is plain HTML/CSS/JS (no build step) and lives in the
+# "new claude MMC" folder of this repo. Without this file Netlify publishes
+# the repo root, which has no index.html, so "/" returned 404.
+# Settings here override the Netlify dashboard's build settings.
+[build]
+  publish = "new claude MMC"
