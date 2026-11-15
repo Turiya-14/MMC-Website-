@@ -266,7 +266,7 @@ button{ font:inherit; background:none; border:none; cursor:pointer; color:inheri
 .bc-brand-word{ font-family:var(--font-brand); font-weight:600; font-size:22px; line-height:1; padding-top:.12em; color:color-mix(in srgb, var(--cream) calc(var(--f) * 100%), var(--mmc-blue)); }
 .bc-brand-word b{ font-weight:800; color:var(--mmc-orange); }
 .bc-eyebrow{
-  position:absolute; z-index:4; left:var(--gutter); top:calc(50% - clamp(150px, 19vw, 300px));
+  position:absolute; z-index:4; left:var(--gutter); top:calc(50% - clamp(150px, 19vw, 300px) + 14px);
   display:flex; align-items:center; gap:10px; font-family:var(--font-mono); font-weight:600; font-size:12px;
   letter-spacing:.1em; text-transform:uppercase; opacity:calc(1 - var(--h1) * 1.6);
 }
@@ -444,7 +444,7 @@ button{ font:inherit; background:none; border:none; cursor:pointer; color:inheri
   .bc{ --cx0:58; --cy0:70; --cx1:50; --cy1:47; --core:min(64vw, 330px); }
   .bc-brand img{ height:32px; }
   .bc-brand-word{ font-size:19px; }
-  .bc-eyebrow{ top:calc(50% - 31vh); font-size:10px; letter-spacing:.08em; }
+  .bc-eyebrow{ top:calc(50% - 31vh + 10px); font-size:10px; letter-spacing:.08em; }
   .bc-h1{ top:calc(50% - 25vh); transform:none; font-size:clamp(54px, 17vw, 96px); }
   .bc-card{ --k:.6; }
   .bc-card--board, .bc-card--paper{ display:none; }
