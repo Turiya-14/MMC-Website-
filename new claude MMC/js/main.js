@@ -34,6 +34,46 @@
   }
 
   /* ---------------------------------------------------------
+     Lazy-load below-the-fold video
+     The "Latest work" brand video (and any other video shipped as
+     data-src + preload="none") is several MB and sits well below the
+     first screen, so the browser requests nothing until it is about to
+     scroll into view. A single IntersectionObserver (rootMargin gives
+     it a head start) swaps data-src -> src, loads, plays, and then
+     unobserves so each clip only loads once.
+     The "We build brands" filmstrip reels are skipped here — they have
+     their own loader further down (play only while on screen, one reel
+     with sound at a time). Under prefers-reduced-motion the clip still
+     loads so its tile shows a still first frame, but it never autoplays.
+     --------------------------------------------------------- */
+  var lazyVideos = Array.prototype.filter.call(
+    document.querySelectorAll('video[data-src]'),
+    function(v){ return !v.closest('.filmstrip-tile'); }
+  );
+  var revealLazyVideo = function(v){
+    v.src = v.dataset.src;
+    v.removeAttribute('data-src');
+    if (prefersReduced) v.preload = 'metadata';
+    v.load();
+    if (!prefersReduced) v.play().catch(function(){ /* autoplay can be refused before user interaction; harmless */ });
+  };
+  if (lazyVideos.length){
+    if (typeof IntersectionObserver !== 'undefined'){
+      var videoObserver = new IntersectionObserver(function(entries, observer){
+        entries.forEach(function(entry){
+          if (!entry.isIntersecting) return;
+          revealLazyVideo(entry.target);
+          observer.unobserve(entry.target);
+        });
+      }, { rootMargin: '600px 0px' });
+      lazyVideos.forEach(function(v){ videoObserver.observe(v); });
+    } else {
+      // no IntersectionObserver support: fail open rather than never loading
+      lazyVideos.forEach(revealLazyVideo);
+    }
+  }
+
+  /* ---------------------------------------------------------
      Lenis smooth scroll (skip on touch / reduced motion)
      --------------------------------------------------------- */
   var lenis = null;
