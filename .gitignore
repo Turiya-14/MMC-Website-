@@ -1,0 +1,10 @@
+# Separate git repositories that live in this folder on disk.
+# If `git add .` picks one of these up, git records it as a submodule
+# pointer with no .gitmodules URL — which breaks Netlify's clone
+# ("No url found for submodule path ... in .gitmodules").
+/mmc-website-repo/
+/mmc-website-new/
+/MMC--website-final/
+
+# Raw source footage/photos for the site — hundreds of MB, not served
+/new claude MMC/Sources @mmc/
